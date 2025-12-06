@@ -29,8 +29,8 @@ def loadAkcjeFromPath(path: str) -> Akcja:
 			path += "/"
 
 	Akcje = []
-	for file in files:
-		Akcje.append(loadAkcjaFromFile(path + file))
+	for file_ in files:
+		Akcje.append(loadAkcjaFromFile(path + file_))
 
 	return Akcje
 
