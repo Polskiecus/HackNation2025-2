@@ -20,7 +20,7 @@ class User:
         try:
             suma_kasy = self.bilans
             for nazwa_firmy in self.akcje.keys():
-                suma_kasy += Scheduler.akcje[nazwa_firmy] * self.akcje[nazwa_firmy]
+                suma_kasy += Gielda.Scheduler.akcje[nazwa_firmy] * self.akcje[nazwa_firmy]
             return (True, suma_kasy)
         except Exception as e:
             return (False, e)
@@ -36,7 +36,7 @@ class User:
 
         #stac i da sie kupic
         akcja.remaining_shares -= ilosc
-        akcja.update_price()  # DO NAPISANIA
+        akcja.update()
         self.bilans -= akcja.wartosc * ilosc
         self.akcje[akcja.nazwa].setdefault(0, akcja.nazwa)
         self.akcje[akcja.nazwa] += ilosc
@@ -54,7 +54,7 @@ class User:
         #sprzedaj akcje, bo je masz
         self.akcje[akcja.nazwa] -= ilosc
         akcja.remaining_shares += ilosc
-        akcja.update_price()  # DO NAPISANIA
+        akcja.update()
         self.bilans += akcja.wartosc * ilosc
         return (True)
 
