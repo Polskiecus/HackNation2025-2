@@ -11,7 +11,7 @@ def loadAkcjeFromPath(path: str) -> Akcja:
 
 	Akcje = []
 	for file in files:
-		Akcje.append(loadAkcjaFromFile(path + file)
+		Akcje.append(loadAkcjaFromFile(path + file))
 
 	return Akcje
 
