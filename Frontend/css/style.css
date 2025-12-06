@@ -4,11 +4,32 @@
 
 body{
     margin: 0 auto;
-    background-color: #222222;
+    /* background-color: #222222; */
     color: white;
 }
 
+#background{
+    z-index: -9999;
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background-image: url("../sprites/BackgroundTexture.png");
+    background-size: 1%;
+    animation: backgroundScroll 30s linear infinite;
+    transform: rotate(15deg) translateX(-10%);
+}
+
+@keyframes backgroundScroll {
+    0%{
+        background-position: 0px 0px;
+    }
+    100%{
+        background-position: 0px 500px;
+    }
+}
+
 #center{
+    z-index: -10;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -16,6 +37,7 @@ body{
 }
 
 #top{
+    pointer-events: none;
     position: fixed;
     top: 0;
     left: 50%;
@@ -29,10 +51,12 @@ body{
     left: 50%;
     text-align: center;
     transform: translate(-50%, 0);
+    mask-image: linear-gradient(90deg,rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);;
 }
 
 #poland-map{
     width: 300px;
+    filter: drop-shadow(0px 16px 16px rgba(0, 0, 0, 0.3));
 }
 
 #money{
@@ -59,8 +83,9 @@ h3{
     cursor: default;
     transform: translateX(20px);
     position: relative;
-    color: black;
-    font-size: 0.8em;
+    color: white;
+    font-size: 0.7em;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .city{
@@ -100,6 +125,7 @@ h3{
     border: 1px gray solid;
     width: 200px;
     height: 200px;
+    image-rendering: pixelated;
 }
 
 #business-list button{
@@ -108,4 +134,16 @@ h3{
     background-color: transparent;
     width: 40px;
     height: 40px;
+}
+
+#top-background {
+    pointer-events: none;
+    position: fixed;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    width: 600px;
+    height: 400px;
+    background: #000000;
+    background: radial-gradient(circle,rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%);
 }

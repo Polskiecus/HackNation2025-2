@@ -1,10 +1,14 @@
 const cities = [
     { left: 0.6, top: 0.4, name: "Warszawa" },
-    { left: 0.46, top: 0.46, name: "Łódź" },
+    // { left: 0.46, top: 0.46, name: "Łódź" },
     { left: 0.5, top: 0.8, name: "Kraków" },
     { left: 0.35, top: 0.3, name: "Bydgoszcz" },
     { left: 0.42, top: 0.06, name: "Gdańsk" },
     { left: 0.018, top: 0.18, name: "Szczecin" },
+    // { left: 0.25, top: 0.38, name: "Poznań" },
+    { left: 0.27, top: 0.6, name: "Wrocław" },
+    { left: 0.8, top: 0.58, name: "Lublin" },
+    { left: 0.85, top: 0.28, name: "Białystok" },
 ];
 
 const prices = [-10, 20, 15, 80, 10, 0, 200, 8];
@@ -47,9 +51,9 @@ function refreshCanvas(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     ctx.beginPath();
-    let cw = (canvas.width - 2 * graphPaddingW);
-    let ch = (canvas.height - 2 * graphPaddingH);
-    let step = cw / (prices.length - 1);
+    const cw = (canvas.width - 2 * graphPaddingW);
+    const ch = (canvas.height - 2 * graphPaddingH);
+    const step = cw / (prices.length - 1);
     let minVal = prices[0];
     let maxVal = prices[0];
     for (let i = 1; i < prices.length; i++) {
@@ -65,8 +69,7 @@ function refreshCanvas(){
 
     ctx.strokeStyle = "gray";
     for (let i = 0; i < graphLinesAmount; i++) {
-        let y = graphPaddingH + ch / (graphLinesAmount - 1) * i
-        console.log(i + " " + y);
+        let y = Math.round(graphPaddingH + ch / (graphLinesAmount - 1) * i);
         ctx.moveTo(graphPaddingW, y);
         ctx.lineTo(graphPaddingW + cw, y);
     }
@@ -84,7 +87,11 @@ function refreshCanvas(){
     }
     ctx.lineTo(graphPaddingW + cw, canvas.height + 2);
     ctx.lineTo(graphPaddingW, canvas.height + 2);
-    ctx.fillStyle = "#ffbb0050";
+    // ctx.fillStyle = "#ffbb0050";
+    const grad = ctx.createLinearGradient(0, 0, 0, ch * 1.5);
+    grad.addColorStop(0, "#ffbb0050");
+    grad.addColorStop(1, "#ffbb0000");
+    ctx.fillStyle = grad;
     ctx.fill();
     ctx.stroke();
 }
