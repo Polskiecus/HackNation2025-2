@@ -1,4 +1,6 @@
 import Gielda
+from math import exp
+from random import uniform
 
 class User:
     akcje: dict[str, int]
@@ -22,7 +24,7 @@ class User:
             return (True, suma_kasy)
         except Exception as e:
             return (False, e)
-        
+
     def kup_akcje(self, akcja: Akcja, ilosc: int) -> (bool):
         if ilosc > akcja.remaining_shares:
             print("za malo akcji")
@@ -56,5 +58,32 @@ class User:
         self.bilans += akcja.wartosc * ilosc
         return (True)
 
-    def raid(self, enemy: User) -> (bool):
-        pass
+    def szacuj(self, enemy: User, budzet: float) -> (bool, float, float):
+        if budzet < self.bilans:
+            print("zbyt biedny")
+            return (False, -1, -1)
+
+        self.bilans -= budzet
+        failure = 1/exp(budzet)
+        if uniform(0, 1) < failure:
+            print("nie fart, nie udalo sie : (")
+            return (False, -1, -1)
+        return (True, enemy.get_networth(), enemy.bilans)
+
+    def raid(self, enemy: User, budzet: float) -> (bool):
+        if budzet < self.bilans:
+            print("zbyt biedny")
+            return (False)
+
+        self.bilans -= budzet
+        #zrob rng, trudno sie raiduje bogacza
+        failure = 1/exp(budzet/(max(enemy.get_networth(), 0.01)))
+        if uniform(0, 1) < failure:
+            print("masz niefarta : ( raid sie nie udal")
+            return (False)
+
+        for nazwa_firmy in enemy.akcje.keys(): #sprzedaj polowe akcji xd
+            if (False) == enemy.sprzedaj_akcje(nazwa_firmy, (enemy.akcje[nazwa_firmy]+1)//2): #zaokraglane w gore
+                return (False)
+        enemy.bilans //= 2 #zrzuc polowe kasy w nicosc
+        return (True)
