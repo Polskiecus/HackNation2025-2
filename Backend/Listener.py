@@ -92,7 +92,7 @@ async def Sell(request: Request) -> bool:
 
     return main_users[login].sprzedaj_akcje(nazwa, ilosc)[0]
 
-@app.get("/region_firms")
+@app.post("/region_firms")
 async def RegionFirms(request: Request):
 	data = await request.json()
 
