@@ -97,7 +97,7 @@ async def Sell(request: Request) -> bool:
     return main_users[login].sprzedaj_akcje(nazwa, ilosc)[0]
 
 @app.get("/region_firms")
-async def RegionFirms(request: Requests):
+async def RegionFirms(request: Request):
 	data = await request.json()
 
 	return ["NanoHard"]
