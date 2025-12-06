@@ -23,9 +23,12 @@ app.add_middleware(
 )
 
 def extract_login_from_request(cookie: int):
-    global Cookies
-    return Cookies[cookie]
-
+	try:
+		global Cookies
+		return Cookies[cookie]
+	except:
+		print("you retarded as fuck")
+		pass
 # REDUNDANT:
 '''
 @app.get("/get_username") #TO DO: IMPLEMENT, BARDZO WAZNE
