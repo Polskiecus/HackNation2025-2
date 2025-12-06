@@ -106,6 +106,4 @@ class Scheduler:
 		for akcja in self.akcje:
 			self.akcje[akcja].update()
 
-if __name__ == "__main__":
-
-	Scheduler(loadAkcjeFromPath("../Firmy/"), 60)
+main_scheduler = Scheduler(loadAkcjeFromPath("../Firmy/"), 60)
