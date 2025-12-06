@@ -20,6 +20,10 @@ const infoHeader = document.getElementById("info-header");
 const infoImg = document.getElementById("info-img");
 const canvas = document.getElementById("stock-graph");
 const ctx = canvas.getContext("2d");
+const currentNews = document.getElementsByClassName("news-bar");
+const stockSection = document.getElementById("stock-section");
+const collapseGraphButton = document.getElementById("collapse-graph-button");
+
 
 const graphPaddingH = 8;
 const graphPaddingW = 0;
@@ -29,6 +33,8 @@ const graphLinesAmount = 10;
 const lerp = (x, y, a) => x * (1 - a) + y * a;
 
 let selectedCity = "";
+let loadedNews = [""];
+let collapsedGraph = false;
 
 refreshCities();
 refreshCanvas();
@@ -97,6 +103,12 @@ function refreshCanvas() {
     ctx.stroke();
 }
 
+function refreshNewsBar(){
+    for (let i = 0; i < currentNews.length; i++) {
+        currentNews[i].innerHTML = loadedNews[0];
+    }
+}
+
 function clickCity(name, img) {
     infoWindow.style.display = "unset";
     infoHeader.innerHTML = name;
@@ -110,7 +122,13 @@ function polandClick() {
     refreshCities();
     infoWindow.style.display = "none";
 }
-/*
+
+function switchGraph() {
+    collapsedGraph = !collapsedGraph;
+    stockSection.style.display = collapsedGraph ? "none" : "table";
+    collapseGraphButton.style.transform = "scaleX(" + (collapsedGraph ? -1 : 1) + ")";
+}
+
 fetch(new URL("http://localhost:8000/register"),
     {
         method: "POST",
@@ -125,6 +143,9 @@ fetch(new URL("http://localhost:8000/register"),
 id = 0;
 
 // deleteAllCookies();
+
+fetch(new URL("http://localhost:8000/newsy")).then(res => res.json())
+    .then(res => { loadedNews = res; refreshNewsBar(); });
 
 fetch(new URL("http://localhost:8000/log_in"),
     {
@@ -141,7 +162,7 @@ fetch(new URL("http://localhost:8000/log_in"),
         // document.cookie = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
         // document.cookie = id;
         console.log(document.cookie);
-
+        /*
         fetch(new URL("http://localhost:8000/set-cookie"),
             {
                 method: "POST",
@@ -154,11 +175,27 @@ fetch(new URL("http://localhost:8000/log_in"),
                 method: "POST"
             }).then(res => res.json())
             .then(res => { console.log(res); });
+        */
 
+        fetch(new URL("http://localhost:8000/buy?nazwa=nanohard&ilosc=10"),
+            {
+                method: "GET",
+                // body: JSON.stringify({ "value": 10 })
+            }).then(res => res.json())
+            .then(res => { console.log(res); });
 
 
     });
-*/
+
+
+
+
+// fetch(new URL("http://localhost:8000/timings")).then(res => res.json())
+//     .then(res => { console.log(res); });
+
+// fetch(new URL("http://localhost:8000/region_firms"), {method: "POST", body: JSON.stringify({"asd": "alsdkj"})}).then(res => res.json())
+//     .then(res => { console.log(res); });
+
 function deleteAllCookies() {
     document.cookie.split(';').forEach(cookie => {
         const eqPos = cookie.indexOf('=');

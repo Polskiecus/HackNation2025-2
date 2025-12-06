@@ -61,6 +61,8 @@ body{
     /* bottom: 0; */
     /* position: absolute; */
     animation: newsScroll 10s linear infinite;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 #bottom #news2{
@@ -107,15 +109,28 @@ h3{
 }
 
 .city-point{
-    cursor: pointer;
     width: 16px;
     height: 16px;
     transform: rotateZ(45deg);
     background-color: red;
+    outline: 2px solid;
+    outline-color: red;
+    outline-offset: -2px;
+    transition: 0.2s;
+}
+
+.city:hover .city-point{
+    transition: 0.2s;
+    outline-offset: 2px;
+}
+
+.selected-city{
+    background-color: rgb(255, 187, 0);
+    outline-color: rgb(255, 187, 0);
 }
 
 .city-name{
-    cursor: pointer;
+    user-select: none;
     transform: translateX(20px);
     position: relative;
     color: white;
@@ -125,6 +140,7 @@ h3{
 }
 
 .city{
+    cursor: pointer;
     position: absolute;
 }
 
@@ -132,6 +148,7 @@ h3{
     position: fixed;
     padding: 16px;
     background-color: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(2px);
 }
 
 #info-window{
@@ -151,14 +168,34 @@ h3{
     border-bottom-right-radius: 16px;
 }
 
-.selected-city{
-    background-color: rgb(255, 187, 0);
-}
-
 #stock-section{
     vertical-align: baseline;
     padding: 8px;
+}
 
+#stock-section button{
+    border-width: 1px;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    background-color: transparent;
+    border-style: solid;
+    padding: 8px;
+    /* margin: 8px; */
+    width: 48%;
+    height: 44px;
+    margin-top: 4px;
+    border-radius: 8px;
+}
+
+#buy{
+    color: green;
+    border-color: green;
+    margin-right: 8px;
+}
+
+#sell{
+    color: red;
+    border-color: red;
+    margin: 0px;
 }
 
 #stock-graph{
@@ -166,9 +203,12 @@ h3{
     width: 200px;
     height: 200px;
     image-rendering: pixelated;
+    border-radius: 8px;
+    margin: 0px;
 }
 
 #business-list button{
+    cursor: pointer;
     border: 1px solid white;
     color: white;
     background-color: transparent;
