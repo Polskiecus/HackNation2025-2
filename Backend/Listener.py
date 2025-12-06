@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Cookie
+from fastapi import FastAPI, Request, Cookie, Response
 import random
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -48,10 +48,17 @@ async def Register(request: Request):
 		Users[data["login"]] = {"pwd": data["pwd"]}
 		return "User created!"
 
-@app.post("/cookie-info")
-async def CheckUser(cookie_: int = Cookie(None)):
-	global Cookies
+@app.post("/set-cookie")
+async def SetCookie(response: Response, request: Request):
+	data = await request.json()
+	response.set_cookie(key="token", value=data["value"])
+	return "set"
 
+@app.post("/cookie-info")
+async def CheckUser(request: Request):
+	global Cookies
+	return request.cookies
+	'''
 	if cookie_:
 		if cookie_ in Cookies:
 			return Cookies[cookie_]
@@ -61,3 +68,4 @@ async def CheckUser(cookie_: int = Cookie(None)):
 
 	else:
 		return "NO COOKIE?"
+	'''

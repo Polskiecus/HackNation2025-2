@@ -71,10 +71,10 @@ h3{
     position: fixed;
     padding: 8px;
     background-color: rgba(0, 0, 0, 0.15);
-    display: none;
 }
 
 #info-window{
+    display: none;
     right: 0;
     top: 50%;
     transform: translate(0, -50%);
@@ -88,4 +88,24 @@ h3{
 
 .selected-city{
     background-color: rgb(255, 187, 0);
+}
+
+#stock-section{
+    vertical-align: baseline;
+    padding: 8px;
+
+}
+
+#stock-graph{
+    border: 1px gray solid;
+    width: 200px;
+    height: 200px;
+}
+
+#business-list button{
+    border: 1px solid white;
+    color: white;
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
 }
