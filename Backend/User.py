@@ -1,4 +1,5 @@
 import Gielda
+import json
 from math import exp
 from random import uniform
 
@@ -7,11 +8,13 @@ class User:
     bilans: float
     id: int
 
-
     def __init__(self, id: int):
         self.akcje = {}
         self.bilans = 0
         self.id = id
+
+    def __str__(self):
+        return r"{" + f"bilans: {self.bilans}, id: {id}, akcje: " + json.dumps(self.akcje) + r"}"
 
     def get_bilans(self) -> (bool, float): #zwraca ile gracz ma kasy
         return (True, self.bilans)
@@ -20,7 +23,7 @@ class User:
         try:
             suma_kasy = self.bilans
             for nazwa_firmy in self.akcje.keys():
-                suma_kasy += Scheduler.akcje[nazwa_firmy] * self.akcje[nazwa_firmy]
+                suma_kasy += Gielda.Scheduler.akcje[nazwa_firmy] * self.akcje[nazwa_firmy]
             return (True, suma_kasy)
         except Exception as e:
             return (False, e)
@@ -30,14 +33,14 @@ class User:
             print("za malo akcji")
             return (False)
 
-        if akcja.wartosc * ilosc:
+        if akcja.shareprice() * ilosc:
             print("zbyt biedny")
             return (False)
 
         #stac i da sie kupic
         akcja.remaining_shares -= ilosc
-        akcja.update_price()  # DO NAPISANIA
-        self.bilans -= akcja.wartosc * ilosc
+        akcja.update()
+        self.bilans -= akcja.shareprice() * ilosc
         self.akcje[akcja.nazwa].setdefault(0, akcja.nazwa)
         self.akcje[akcja.nazwa] += ilosc
         return (True)
@@ -54,8 +57,8 @@ class User:
         #sprzedaj akcje, bo je masz
         self.akcje[akcja.nazwa] -= ilosc
         akcja.remaining_shares += ilosc
-        akcja.update_price()  # DO NAPISANIA
-        self.bilans += akcja.wartosc * ilosc
+        self.bilans += akcja.shareprice() * ilosc
+        akcja.update()
         return (True)
 
     def szacuj(self, enemy: User, budzet: float) -> (bool, float, float):

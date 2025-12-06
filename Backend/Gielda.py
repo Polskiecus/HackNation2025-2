@@ -36,10 +36,12 @@ class Akcja:
 
 		self.historic_value   = historic_value
 		self.czynniki         = []
+		self.region           = ""
+
 
 	def __str__(self):
 
-		return f"{self.nazwa} {self.wartosc} {self.remaining_shares} {shares_total}\n"+self.historic_value_str()
+		return f"{self.nazwa} {self.wartosc} {self.remaining_shares} {self.shares_total} {self.region}\n"+self.historic_value_str()
 
 	def historic_value_str(self):
 
@@ -75,10 +77,15 @@ class Akcja:
 		self.nazwa = data[0]
 		self.wartosc = float(data[1])
 		self.remaining_shares = int(data[2])
+		self.shares_total = int(data[3])
+		self.region = data[4]
 		self.historic_value   = [float(item) for item in historic.split() if item != ""]
 
 	def dodaj_czynnik(czynnik: float):
 		self.czynniki.append(czynnik)
+
+	def shareprice(self):
+		return round(self.wartosc/self.total_shares, 2)
 
 class Scheduler:
 
