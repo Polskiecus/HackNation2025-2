@@ -48,7 +48,7 @@ async def Register(request: Request):
 		Users[data["login"]] = {"pwd": data["pwd"]}
 		return "User created!"
 
-@app.get("/cookie-info")
+@app.post("/cookie-info")
 async def CheckUser(request: Request):
 	global Cookies
 	data = await request.json()
