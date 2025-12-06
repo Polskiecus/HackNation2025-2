@@ -84,6 +84,9 @@ class Akcja:
 	def dodaj_czynnik(czynnik: float):
 		self.czynniki.append(czynnik)
 
+	def shareprice(self):
+		return round(self.wartosc/self.total_shares, 2)
+
 class Scheduler:
 
 	def __init__(self, akcje: [Akcja]=[], time_to_pass: float=0.2):
