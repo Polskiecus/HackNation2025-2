@@ -5,7 +5,6 @@ import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 from User import User
 from main import main_scheduler
-from main import main_users
 
 app = FastAPI()
 Users: dict[str, User]   = {} #dict[login, user]
@@ -22,10 +21,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-def extract_login_from_request(cookie: int):
-    global Cookies
-    return Cookies[cookie]
 
+# REDUNDANT:
+'''
+@app.get("/get_username") #TO DO: IMPLEMENT, BARDZO WAZNE
+async def get_login() -> str:
+    global Cookies
+    try:
+        return Cookies[0] #TO DO: FIX
+    except:
+        return "login"
+'''
 
 # may god have mercy upon me
 async def RunAtIntervals(func):
@@ -40,59 +46,40 @@ async def Timings(): #za ile sekund aktualizuje sie rynek
 
 @app.get("/player")
 async def DaneGracza() -> str:
-    login = extract_login_from_request()
+    login = get_login()
     if login in Users:
         return str(Users[login])
     return "{nie jestes zalogowany albo nie istniejesz}"
 
 @app.get("/buy")
 async def Buy(nazwa: str, ilosc: int) -> bool:
-    data = await request.json()
-
-    login = extract_login_from_request(["cookie"])
-    ilosc = data["ilosc"]
-    nazwa = data["nazwa"]
-
-    if login not in Users:
-        return False
-
-    try:
-        ilosc = int(ilosc)
-    except:
-        return False  # nie wykonalo sie
-
-    return main_users[login].kup_akcje(nazwa, ilosc)[0]
-
+    login = get_login()
+    if login in Users:
+        return Users[login].sprzedaj_akcje(nazwa, ilosc)[0]
+    return False
 
 @app.get("/sell")
-async def Sell(request: Request) -> bool:
-    data = await request.json()
-
-    login = extract_login_from_request(["cookie"])
-    ilosc = data["ilosc"]
-    nazwa = data["nazwa"]
-
-    if login not in Users:
-        return False
-
-    try:
-        ilosc = int(ilosc)
-    except:
-        return False  # nie wykonalo sie
-
-    return main_users[login].sprzedaj_akcje(nazwa, ilosc)[0]
+async def Sell(nazwa: str, ilosc: int) -> bool:
+    login = get_login()
+    if login in Users:
+        return Users[login].kup_akcje(nazwa, ilosc)[0]
+    return False
 
 @app.get("/region_firms")
-async def RegionFirms():
-	return ""
+async def RegionFirms(request: Requests):
+	data = await request.json()
 
-@app.get("/firminfo/{}")
-async def FirmInfo():
-	return ""
+	return ["NanoHard"]
+
+@app.get("/firminfo")
+async def FirmInfo(request: Request):
+	data = await request.json()
+
+	return {"shares_total": 100, "shares_available": 56, "value": 10000, "regiony": ["Warszawa"]}
 
 @app.get("/newsy")
 async def Newsy():
-	return ""
+	return ["Polska Upada inwazja III rzeszy!!!!!", "Jan Pat 2 pierdnął"]
 
 @app.post("/log_in")
 async def Login(request: Request):
@@ -125,25 +112,19 @@ async def Register(request: Request):
 	else:
 		Users[data["login"]] = {"pwd": data["pwd"]}
 		return "User created!"
-
+'''
 @app.post("/set-cookie")
 async def SetCookie(response: Response, request: Request):
 	data = await request.json()
 	response.set_cookie(key="token", value=data["value"])
 	return "set"
+'''
 
 @app.post("/cookie-info")
 async def CheckUser(request: Request):
 	global Cookies
-	return request.cookies
-	'''
-	if cookie_:
-		if cookie_ in Cookies:
-			return Cookies[cookie_]
+	data = await request.json()
 
-		else:
-			return "Wrong Cookie!"
-
-	else:
-		return "NO COOKIE?"
-	'''
+	if "cookie" not in data: return "NO COOKIE?"
+	if data["cookie"] in Cookies: return Cookies[data["cookie"]]
+	return "Invalid cookie"
