@@ -43,21 +43,21 @@ async def Timings(): #za ile sekund aktualizuje sie rynek
 
 @app.get("/buy")
 async def Buy(nazwa: str, ilosc: int) -> bool:
-    data = await request.json()
+	data = await request.json()
 
-    login = extract_login_from_request(data["cookie"])
-    ilosc = data["ilosc"]
-    nazwa = data["nazwa"]
+	login = extract_login_from_request(data["cookie"])
+	ilosc = data["ilosc"]
+	nazwa = data["nazwa"]
 
-    if login not in Users:
-        return False
+	if login not in Users:
+		return False
 
-    try:
-        ilosc = int(ilosc)
-    except:
-        return False  # nie wykonalo sie
+	try:
+		ilosc = int(ilosc)
+	except:
+		return False  # nie wykonalo sie
 
-    return main_users[login].kup_akcje(nazwa, ilosc)[0]
+	return main_users[login].kup_akcje(nazwa, ilosc)[0]
 
 
 @app.get("/sell")
