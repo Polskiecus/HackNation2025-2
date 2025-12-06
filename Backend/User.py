@@ -14,7 +14,7 @@ class User:
         self.id = id
 
     def __str__(self):
-        return r"{" + f"bilans: {self.bilans}, id: {id}, akcje: "json.dumps(self.akcje) + r"}"
+        return r"{" + f"bilans: {self.bilans}, id: {id}, akcje: " + json.dumps(self.akcje) + r"}"
 
     def get_bilans(self) -> (bool, float): #zwraca ile gracz ma kasy
         return (True, self.bilans)
