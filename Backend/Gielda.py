@@ -91,6 +91,8 @@ class Akcja:
 	def update(self):
 
 		self.historic_value.append(self.wartosc)
+		if (len(self.historic_value) > 10):
+			self.historic_value = self.historic_value[1:]
 
 		for czynnik in czynniki:
 			self.wartosc *= czynnik

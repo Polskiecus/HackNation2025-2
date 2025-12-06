@@ -136,9 +136,14 @@ async def RegionFirms(request: Request):
 
 @app.get("/firminfo")
 async def FirmInfo(request: Request):
+	global main_scheduler
 	data = await request.json()
 
-	return {"shares_total": 100, "shares_available": 56, "value": 10000, "regiony": ["Warszawa"]}
+	try:
+		firma = main_scheduler.akcje[data["nazwa"]]
+		return {"shares_total": firma.shares_total, "shares_available": firma.shares_available, "value": firma.wartosc, "regiony": firma.region.split(";"), "values": firma.historic_value}
+	except:
+		return "I tried"
 
 @app.get("/newsy")
 async def Newsy():
