@@ -37,7 +37,7 @@ class User:
         except Exception as e:
             return (False, e)
 
-    def kup_akcje(self, akcja: Akcja, ilosc: int) -> (bool):
+    def kup_akcje(self, akcja: Gielda.Akcja, ilosc: int) -> (bool):
         if ilosc > akcja.remaining_shares:
             print("za malo akcji")
             return (False)
@@ -70,7 +70,7 @@ class User:
         akcja.update()
         return (True)
 
-    def szacuj(self, enemy: User, budzet: float) -> (bool, float, float):
+    def szacuj(self, enemy, budzet: float) -> (bool, float, float):
         if budzet < self.bilans:
             print("zbyt biedny")
             return (False, -1, -1)
@@ -82,7 +82,7 @@ class User:
             return (False, -1, -1)
         return (True, enemy.get_networth(), enemy.bilans)
 
-    def raid(self, enemy: User, budzet: float) -> (bool):
+    def raid(self, enemy, budzet: float) -> (bool):
         if budzet < self.bilans:
             print("zbyt biedny")
             return (False)

@@ -21,7 +21,7 @@ FirmyPath = "../Firmy/"
 |FUNCTIONS|
 #=========#
 '''
-def loadAkcjeFromPath(path: str) -> Akcja:
+def loadAkcjeFromPath(path: str):
 
 	files = os.listdir(path)
 	if len(path) > 0:
@@ -34,7 +34,7 @@ def loadAkcjeFromPath(path: str) -> Akcja:
 
 	return Akcje
 
-def loadAkcjaFromFile(path: str) -> Akcja:
+def loadAkcjaFromFile(path: str):
 
 	new_ = Akcja()
 	new_.reload_from_file(path)
@@ -50,7 +50,7 @@ def loadAkcjaFromFile(path: str) -> Akcja:
 '''
 class Akcja:
 
-	def __init__(self, nazwa: str="", wartosc: float=0, remaining_shares: int=0, historic_value: [float]=[0]):
+	def __init__(self, nazwa: str="", wartosc: float=0, remaining_shares: int=0, shares_total: int=0, historic_value: [float]=[0]):
 
 		self.nazwa            = nazwa
 		self.wartosc          = wartosc
