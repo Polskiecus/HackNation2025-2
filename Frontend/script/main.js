@@ -38,3 +38,14 @@ function polandClick() {
     refreshCities();
     infoWindow.style.display = "none";
 }
+
+fetch(new URL("http://localhost:8000/log_in"),
+    {
+        method: "POST",
+        body: JSON.stringify({
+            "login": "User1",
+            "pwd": "123"
+        })
+
+    }).then(res => res.json())
+    .then(res => { console.log(res); });
