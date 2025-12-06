@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request, Cookie, Response
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi.middleware.cors import CORSMiddleware
 from math import lgamma
 import asyncio
@@ -78,10 +79,10 @@ def extract_login_from_request(cookie: int):
 		pass
 
 # may god have mercy upon me
-async def RunAtIntervals(func):
-	global RUN
+async def RunAtIntervals():
+	global RUN, main_scheduler
 	while RUN:
-		func()
+		main_scheduler.check_for_update()
 		await asyncio.sleep(1)
 
 @app.get("/timings")
@@ -199,6 +200,13 @@ def some_bullshit():
 	global bullshit_news
 	return random.choice(bullshit_news)
 
+@app.on_event("startup")
+async def startup():
+
+	scheduler = AsyncIOScheduler()
+	scheduler.add_job(RunAtIntervals, "interval", seconds=1)  # Adjust interval here
+	scheduler.start()
+
 if __name__ == "__main__":
 
 	main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
@@ -207,6 +215,3 @@ if __name__ == "__main__":
 	Users: dict[str, User]      = {} #dict[login, user]
 	Cookies                     = {} #cos
 	RUN                         = True
-
-
-	RunAtIntervals(main_scheduler.check_for_update)
