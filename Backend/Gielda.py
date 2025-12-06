@@ -1,4 +1,6 @@
 import json
+import time
+
 
 FirmyPath = "../Firmy/"
 
@@ -17,24 +19,34 @@ def loadAkcjeFromPath(path: str) -> Akcja:
 
 def loadAkcjaFromFile(path: str) -> Akcja:
 
-	f = open(path)
-	data = read().split()
-	f.close()
+	new_ = Akcja()
+	new_.reload_from_file(path)
 
-	return Akcja(data[0], data[1], data[2], data[3])
+	return new_
 
 class Akcja:
 
-	def __init__(self, nazwa: str, wartosc: float, remaining_shares: int):
+	def __init__(self, nazwa: str="", wartosc: float=0, remaining_shares: int=0, historic_value: [float]):
 
 		self.nazwa            = nazwa
 		self.wartosc          = wartosc
 		self.remaining_shares = remaining_shares
 		self.shares_total     = shares_total
 
+		self.historic_value   = historic_value
+		self.czynniki         = []
+
 	def __str__(self):
 
-		return f"{self.nazwa} {self.wartosc} {self.remaining_shares} {shares_total}"
+		return f"{self.nazwa} {self.wartosc} {self.remaining_shares} {shares_total}\n"+self.historic_value_str()
+
+	def historic_value_str(self):
+
+		return " ".join([float(item) for item in self.historic_value])
+
+	def historic_value_float(self):
+
+		return self.historic_value
 
 	def export(self, path: str=None):
 		global FirmyPath
@@ -45,17 +57,48 @@ class Akcja:
 		f.write(self.__str__)
 		f.close()
 
-	def update(self, czynniki: float):
+	def update(self):
 
 		for czynnik in czynniki:
 			self.wartosc *= czynnik
 
+		self.czynniki = []
+
+	def reload_from_file(self, path: str):
+
+		f = open(path)
+		data, historic = f.read().splitlines()
+		data = data.split()
+		f.close()
+
+		self.nazwa = data[0]
+		self.wartosc = float(data[1])
+		self.remaining_shares = int(data[2])
+		self.historic_value   = [float(item) for item in historic.split() if item != ""]
+
+	def dodaj_czynnik(czynnik: float):
+		self.czynniki.append(czynnik)
+
 class Scheduler:
 
-	def __init__(self, akcje: [Akcja]=[]):
+	def __init__(self, akcje: [Akcja]=[], time_to_pass: float):
 
-		akcje = akcje
+		self.akcje = akcje
+		self.time_to_pass = time_to_pass
+		self.last_checked = time.time()
+
+	def check_for_update(self):
+
+		if self.last_checked + self.time_to_pass < time.time():
+			self.update()
+
+
+	def update(self):
+
+		for akcja in self.akcje:
+			akcja.update()
+
 if __name__ == "__main__":
 
 
-	
+	Scheduler(loadAkcjeFromPath("../Firmy/"), 60)
