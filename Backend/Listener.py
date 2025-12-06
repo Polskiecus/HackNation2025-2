@@ -6,7 +6,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from User import User
 from main import main_scheduler
 from main import main_users
+from Listener import *
+from Gielda import *
+from User import *
+from NewsHandler import *
+import time
 
+main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
+main_scheduler = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
 app = FastAPI()
 Users: dict[str, User]   = {} #dict[login, user]
 Cookies = {} #cos
@@ -44,7 +51,8 @@ async def RunAtIntervals(func):
 
 @app.get("/timings")
 async def Timings(): #za ile sekund aktualizuje sie rynek
-	return "" #TODO:
+	global main_scheduler
+	return main_scheduler.time_to_pass + main_scheduler.last_checked - time.time()
 
 @app.get("/buy")
 async def Buy(nazwa: str, ilosc: int) -> bool:
@@ -146,3 +154,6 @@ async def CheckUser(request: Request):
 	if "cookie" not in data: return "NO COOKIE?"
 	if data["cookie"] in Cookies: return Cookies[data["cookie"]]
 	return "Invalid cookie"
+
+
+
