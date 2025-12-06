@@ -1,10 +1,26 @@
+'''
+#===========#
+|PYTHON BASE|
+#===========#
+'''
 import json
 import time
 import os
 
 
+'''
+#======#
+|CONFIG|
+#======#
+'''
 FirmyPath = "../Firmy/"
 
+
+'''
+#=========#
+|FUNCTIONS|
+#=========#
+'''
 def loadAkcjeFromPath(path: str) -> Akcja:
 
 	files = os.listdir(path)
@@ -25,6 +41,13 @@ def loadAkcjaFromFile(path: str) -> Akcja:
 
 	return new_
 
+
+
+'''
+#===========#
+|SHARE CLASS|
+#===========#
+'''
 class Akcja:
 
 	def __init__(self, nazwa: str="", wartosc: float=0, remaining_shares: int=0, historic_value: [float]=[0]):
@@ -71,14 +94,14 @@ class Akcja:
 
 		f = open(path)
 		data, historic = f.read().splitlines()
-		data = data.split()
+		data           = data.split()
 		f.close()
 
-		self.nazwa = data[0]
-		self.wartosc = float(data[1])
+		self.nazwa            = data[0]
+		self.wartosc          = float(data[1])
 		self.remaining_shares = int(data[2])
-		self.shares_total = int(data[3])
-		self.region = data[4]
+		self.shares_total     = int(data[3])
+		self.region           = data[4]
 		self.historic_value   = [float(item) for item in historic.split() if item != ""]
 
 	def dodaj_czynnik(czynnik: float):
@@ -87,6 +110,11 @@ class Akcja:
 	def shareprice(self):
 		return round(self.wartosc/self.total_shares, 2)
 
+'''
+#===============#
+|SCHEDULER CLASS|
+#===============#
+'''
 class Scheduler:
 
 	def __init__(self, akcje: [Akcja]=[], time_to_pass: float=0.2):
