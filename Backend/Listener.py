@@ -27,7 +27,7 @@ async def Login(request: Request):
 	else:
 		if Users[data["login"]]["pwd"] == data["pwd"]:
 			num_ = random.randint(0, 2**30)
-			while num_ not in Cookies:
+			while num_ in Cookies:
 				num_ = random.randint(0, 2**30)
 
 			Cookies[num_] = data["login"]
