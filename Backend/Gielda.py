@@ -114,6 +114,4 @@ class Scheduler:
 		else:
 			self.akcje[nazwa].dodaj_czynnik(czynnik)
 
-if __name__ == "__main__":
-
-	Scheduler(loadAkcjeFromPath("../Firmy/"), 60)
+main_scheduler = Scheduler(loadAkcjeFromPath("../Firmy/"), 60)
