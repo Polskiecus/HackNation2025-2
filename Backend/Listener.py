@@ -7,8 +7,6 @@ import time
 
 
 from User import User
-from main import main_scheduler
-from main import main_users
 from Listener import *
 from Gielda import *
 from User import *
