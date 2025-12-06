@@ -105,25 +105,19 @@ async def Register(request: Request):
 	else:
 		Users[data["login"]] = {"pwd": data["pwd"]}
 		return "User created!"
-
+'''
 @app.post("/set-cookie")
 async def SetCookie(response: Response, request: Request):
 	data = await request.json()
 	response.set_cookie(key="token", value=data["value"])
 	return "set"
+'''
 
 @app.post("/cookie-info")
 async def CheckUser(request: Request):
 	global Cookies
-	return request.cookies
-	'''
-	if cookie_:
-		if cookie_ in Cookies:
-			return Cookies[cookie_]
+	data = await request.json()
 
-		else:
-			return "Wrong Cookie!"
-
-	else:
-		return "NO COOKIE?"
-	'''
+	if "cookie" not in data: return "NO COOKIE?"
+	if data["cookie"] in Cookies: return Cookies[data["cookie"]]
+	return "Invalid cookie"
