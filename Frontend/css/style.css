@@ -16,7 +16,7 @@ body{
     background-image: url("../sprites/BackgroundTexture.png");
     background-size: 1%;
     animation: backgroundScroll 30s linear infinite;
-    transform: rotate(15deg) translateX(-10%);
+    transform: rotate(15deg) translateX(-40%);
 }
 
 @keyframes backgroundScroll {
@@ -55,6 +55,25 @@ body{
     transform: translate(-50%, 0);
     mask-image: linear-gradient(90deg,rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);;
 }
+
+#left-bottom{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-top-right-radius: 16px;
+}
+
+#left-bottom button{
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+}
+
+#left-bottom button img{
+    width: 100%;
+} 
 
 #bottom div{
     /* mask-image: linear-gradient(90deg,rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);; */
@@ -102,6 +121,10 @@ body{
 
 h1{
     margin: 0;
+}
+
+#stock-section h1{
+    margin-bottom: 8px;
 }
 
 h3{
@@ -171,6 +194,7 @@ h3{
 #stock-section{
     vertical-align: baseline;
     padding: 8px;
+    padding-top: 0px;
 }
 
 #stock-section button{
@@ -180,10 +204,11 @@ h3{
     border-style: solid;
     padding: 8px;
     /* margin: 8px; */
-    width: 48%;
+    width: 47%;
     height: 44px;
     margin-top: 4px;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 #buy{
@@ -209,11 +234,29 @@ h3{
 
 #business-list button{
     cursor: pointer;
-    border: 1px solid white;
+    /* border: 1px solid white; */
+    border: none;
     color: white;
     background-color: transparent;
     width: 40px;
     height: 40px;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+#business-list button:first-child{
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+#business-list button:last-child{
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+#business-list button img{
+    /* width: 30px; */
+    width: 100%;
+    /* padding: 5px; */
 }
 
 #top-background {

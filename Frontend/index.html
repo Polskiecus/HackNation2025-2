@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div id="background"></div>
+    <div id="background" onclick="polandClick()"></div>
 
     <div id="top">
         <div id="top-background"></div>
@@ -62,17 +62,17 @@
                 <td>
                     <div id="business-list">
                         <button id="collapse-graph-button" onclick="switchGraph()">←</button><br>
-                        <button>P</button><br>
+                        <button><img src="sprites/ParuwexIcon.png" alt="paruwex"></button><br>
                         <button>B</button><br>
-                        <button>N</button><br>
-                        <button>4</button><br>
-                        <button>5</button><br>
+                        <button><img src="sprites/NanoHardIcon.png" alt="nanohard"></button><br>
+                        <button><img src="sprites/RopuchaIcon.png" alt="ropucha"></button><br>
+                        <button><img src="sprites/DVDProjectBlueIcon.png" alt="dvdprojectblue"></button><br>
                         <button>6</button><br>
                         <button>7</button>
                     </div>
                 </td>
                 <td id="stock-section">
-                    <h1>Januszex</h1>
+                    <h1>Ropucha</h1>
                     <canvas id="stock-graph"></canvas><br>
                     <button id="buy">KUP</button>
                     <button id="sell">SPRZEDAJ</button>
@@ -84,6 +84,10 @@
     <div id="bottom">
         <div class="news-bar">Wiadomość...wiadomość...wiadomość...wiadomość...wiadomość</div>
         <div id="news2" class="news-bar">Wiadomość...wiadomość...wiadomość...wiadomość...wiadomość</div>
+    </div>
+
+    <div id="left-bottom" class="window">
+        <button><img src="sprites/SocialIcon.png" alt="nanohard"></button>
     </div>
 
     <script src="script/main.js"></script>
