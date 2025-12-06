@@ -100,8 +100,8 @@ class User:
         enemy.bilans //= 2 #zrzuc polowe kasy w nicosc
         return (True)
 
-def read_users_from_file() -> dict[str, User]:
-    f = open("./users.json")
+def read_users_from_file(path: str) -> dict[str, User]:
+    f = open(path)
     data = json.load(f)
     users: dict[str, User] = {}
     for item in data:

@@ -50,17 +50,40 @@ async def DaneGracza() -> str:
 
 @app.get("/buy")
 async def Buy(nazwa: str, ilosc: int) -> bool:
+    data = await request.json()
+
     login = get_login()
-    if login in Users:
-        return Users[login].sprzedaj_akcje(nazwa, ilosc)[0]
-    return False
+    ilosc = data["ilosc"]
+    nazwa = data["nazwa"]
+
+    if login not in Users:
+        return False
+
+    try:
+        ilosc = int(ilosc)
+    except:
+        return False  # nie wykonalo sie
+
+    return main_users[login].kup_akcje(nazwa, ilosc)[0]
+
 
 @app.get("/sell")
-async def Sell(nazwa: str, ilosc: int) -> bool:
+async def Sell(request: Request) -> bool:
+    data = await request.json()
+
     login = get_login()
-    if login in Users:
-        return Users[login].kup_akcje(nazwa, ilosc)[0]
-    return False
+    ilosc = data["ilosc"]
+    nazwa = data["nazwa"]
+
+    if login not in Users:
+        return False
+
+    try:
+        ilosc = int(ilosc)
+    except:
+        return False  # nie wykonalo sie
+
+    return main_users[login].sprzedaj_akcje(nazwa, ilosc)[0]
 
 @app.get("/region_firms")
 async def RegionFirms():
