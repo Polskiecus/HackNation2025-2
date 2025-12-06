@@ -14,6 +14,5 @@
 ## klęski żywiołowe
 na które gracz nie ma wpływu:
 - powódź, pożar, tornado, trzęsienie ziemii, wojna
-na które gracz ma wpływ:
 - strajk, inflacja
 
