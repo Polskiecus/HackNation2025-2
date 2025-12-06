@@ -5,6 +5,7 @@ import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 from User import User
 from main import main_scheduler
+from main import main_users
 
 app = FastAPI()
 Users: dict[str, User]   = {} #dict[login, user]
