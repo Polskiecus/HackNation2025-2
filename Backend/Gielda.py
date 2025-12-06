@@ -106,6 +106,14 @@ class Scheduler:
 		for akcja in self.akcje:
 			self.akcje[akcja].update()
 
+	def push_changes(self, nazwa: str, czynnik: float):
+
+		if nazwa not in self.akcje:
+			print("you are retarded")
+
+		else:
+			self.akcje[nazwa].dodaj_czynnik(czynnik)
+
 if __name__ == "__main__":
 
 	Scheduler(loadAkcjeFromPath("../Firmy/"), 60)
