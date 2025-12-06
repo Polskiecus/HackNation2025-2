@@ -10,9 +10,6 @@ from random import uniform
 
 import NewsHandler
 from NewsHandler import News
-
-from Backend.NewsHandler import NewsHandler
-
 '''
 #======#
 |CONFIG|

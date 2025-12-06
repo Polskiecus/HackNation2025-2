@@ -19,7 +19,7 @@ class User:
     def __str__(self):
         return r"{" + f"login: {self.login}, bilans: {self.bilans}, akcje: " + json.dumps(self.akcje) + r"}"
 
-    def read_from_json(self, json_data: json) -> User:
+    def read_from_json(self, json_data: json):
         self.akcje = json_data["akcje"]
         self.bilans = json_data["bilans"]
         self.password = json_data["password"]

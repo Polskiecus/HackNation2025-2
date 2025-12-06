@@ -13,6 +13,8 @@ from User import *
 from NewsHandler import *
 import time
 
+app = FastAPI()
+
 
 origins = ["*"]
 
@@ -148,7 +150,7 @@ async def Newsy():
 	global main_scheduler
 	temp = [main_scheduler.get_a_news()]
 	if temp == [None]: temp = [some_bullshit()]
-	else random.rand() < 0.6: temp = [some_bullshit()]
+	elif random.rand() < 0.6: temp = [some_bullshit()]
 	return temp
 
 @app.post("/log_in")
@@ -200,9 +202,11 @@ def some_bullshit():
 if __name__ == "__main__":
 
 	main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
-	main_scheduler = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
-	app = FastAPI()
-	Users: dict[str, User]   = {} #dict[login, user]
-	Cookies = {} #cos
-	RUN     = True
+	main_scheduler              = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
+
+	Users: dict[str, User]      = {} #dict[login, user]
+	Cookies                     = {} #cos
+	RUN                         = True
+
+
 	RunAtIntervals(main_scheduler.check_for_update)
