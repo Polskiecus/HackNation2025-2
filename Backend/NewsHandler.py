@@ -23,7 +23,7 @@ def LoadFolder(path: str=None):
     for file_ in files:
         out.append(LoadFromPath(path+file_))
 
-    return Newsy(out)
+    return NewsHandler(out)
 
 class News:
 
@@ -31,6 +31,9 @@ class News:
         self.nazwa  = nazwa
         self.tresc  = tresc
         self.efekty = efekty
+
+    def __str__(self):
+        return self.tresc
 
 class NewsHandler:
 
@@ -41,4 +44,5 @@ class NewsHandler:
         return random.choice(self.newsy)
 
 if __name__ == "__main__":
-
+    n = LoadFolder()
+    print(n.random_news())
