@@ -22,12 +22,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-<<<<<<< HEAD
 def extract_login_from_request(cookie: int):
     global Cookies
     return Cookies[cookie]
-
-=======
 
 # REDUNDANT:
 '''
