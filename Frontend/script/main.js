@@ -20,7 +20,7 @@ const infoHeader = document.getElementById("info-header");
 const canvas = document.getElementById("stock-graph");
 const ctx = canvas.getContext("2d");
 
-const graphPaddingH = 16;
+const graphPaddingH = 8;
 const graphPaddingW = 0;
 const graphMultiply = 5;
 const graphLinesAmount = 10;
