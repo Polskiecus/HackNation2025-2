@@ -21,6 +21,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+# REDUNDANT:
+'''
 @app.get("/get_username") #TO DO: IMPLEMENT, BARDZO WAZNE
 async def get_login() -> str:
     global Cookies
@@ -28,7 +31,7 @@ async def get_login() -> str:
         return Cookies[0] #TO DO: FIX
     except:
         return "login"
-
+'''
 
 # may god have mercy upon me
 async def RunAtIntervals(func):
