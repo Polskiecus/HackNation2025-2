@@ -24,7 +24,7 @@ app.add_middleware(
 async def get_login() -> str:
     global Cookies
     try:
-        return Cookies[]
+        return Cookies[0]
     except:
         return "login"
 
@@ -37,7 +37,7 @@ async def RunAtIntervals(func):
 		await asyncio.sleep(1)
 
 @app.get("/timings")
-async def Timings():
+async def Timings(): #za ile sekund aktualizuje sie rynek
 	return "" #TODO:
 
 @app.get("/player")
