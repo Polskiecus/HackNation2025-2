@@ -125,6 +125,3 @@ def write_users_to_file(path: str, users: dict[str, User]) -> None:
             f.write(',')
     f.write("\n}")
     f.close()
-
-users = read_users_from_file("../Users/users.json")
-write_users_to_file("../Users/users.json", users)
