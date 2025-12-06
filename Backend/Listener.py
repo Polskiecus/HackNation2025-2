@@ -66,12 +66,16 @@ async def Sell(nazwa: str, ilosc: int) -> bool:
     return False
 
 @app.get("/region_firms")
-async def RegionFirms():
-	return ""
+async def RegionFirms(request: Requests):
+	data = await request.json()
 
-@app.get("/firminfo/{}")
-async def FirmInfo():
-	return ""
+	return ["NanoHard"]
+
+@app.get("/firminfo")
+async def FirmInfo(request: Request):
+	data = await request.json()
+
+	return {"shares_total": 100, "shares_available": 56, "value": 10000, "regiony": ["Warszawa"]}
 
 @app.get("/newsy")
 async def Newsy():
