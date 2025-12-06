@@ -83,7 +83,7 @@ class Scheduler:
 
 	def __init__(self, akcje: [Akcja]=[], time_to_pass: float):
 
-		self.akcje = akcje
+		self.akcje = {akcja.nazwa: akcja for akcja in akcje}
 		self.time_to_pass = time_to_pass
 		self.last_checked = time.time()
 
@@ -96,7 +96,7 @@ class Scheduler:
 	def update(self):
 
 		for akcja in self.akcje:
-			akcja.update()
+			self.akcje[akcja].update()
 
 if __name__ == "__main__":
 
