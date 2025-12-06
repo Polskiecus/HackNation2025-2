@@ -55,6 +55,27 @@ h3{
 
 .city{
     position: absolute;
-    left: 180px;
-    top: 120px;
+}
+
+.window{
+    position: fixed;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.15);
+    display: none;
+}
+
+#info-window{
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+#stock-window{
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.selected-city{
+    background-color: burlywood;
 }
