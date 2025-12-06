@@ -1,6 +1,19 @@
 import json
 
 
+def loadAkcjeFromPath(path: str) -> Akcja:
+
+	files = os.listdir(path)
+	if len(path) > 0:
+		if path[-1] != '/':
+			path += "/"
+
+	Akcje = []
+	for file in files:
+		Akcje.append(loadAkcjaFromFile(path + file)
+
+	return Akcje
+
 def loadAkcjaFromFile(path: str) -> Akcja:
 
 	f = open(path)
@@ -27,6 +40,11 @@ class Akcja:
 		f = open(path, "w")
 		f.write(self.__str__)
 		f.close()
+
+	def update(self, czynniki: float):
+
+		for czynnik in czynniki:
+			self.wartosc *= czynnik
 
 class Scheduler:
 
