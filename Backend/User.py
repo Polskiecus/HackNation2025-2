@@ -2,6 +2,7 @@ import Gielda
 import json
 from math import exp
 from random import uniform
+from Gielda import Akcja
 
 class User:
     akcje: dict[str, int]
@@ -37,18 +38,17 @@ class User:
         except Exception as e:
             return (False, e)
 
-    def kup_akcje(self, akcja: Gielda.Akcja, ilosc: int) -> (bool):
+    def kup_akcje(self, akcja: Akcja, ilosc: int) -> (bool):
         if ilosc > akcja.remaining_shares:
             print("za malo akcji")
             return (False)
 
-        if akcja.shareprice() * ilosc:
+        if akcja.shareprice() * ilosc > self.bilans:
             print("zbyt biedny")
             return (False)
 
         #stac i da sie kupic
         akcja.remaining_shares -= ilosc
-        akcja.update()
         self.bilans -= akcja.shareprice() * ilosc
         self.akcje[akcja.nazwa].setdefault(0, akcja.nazwa)
         self.akcje[akcja.nazwa] += ilosc
@@ -56,18 +56,17 @@ class User:
 
     def sprzedaj_akcje(self, akcja: Gielda.Akcja, ilosc: int) -> (bool):
         if akcja.nazwa not in self.akcje:
-            print("nie zadnej akcji")
+            print("nie masz zadnej akcji")
             return (False)
 
         if ilosc > self.akcje[akcja.nazwa]:
-            print("nie masz tylu akcji")
+            print("nie ma tylu akcji")
             return (False)
 
         #sprzedaj akcje, bo je masz
         self.akcje[akcja.nazwa] -= ilosc
         akcja.remaining_shares += ilosc
         self.bilans += akcja.shareprice() * ilosc
-        akcja.update()
         return (True)
 
     def szacuj(self, enemy, budzet: float) -> (bool, float, float):
