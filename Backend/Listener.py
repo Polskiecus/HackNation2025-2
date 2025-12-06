@@ -21,13 +21,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/get_username") #TO DO: IMPLEMENT, BARDZO WAZNE
-async def get_login() -> str:
+def extract_login_from_request(cookie: int):
     global Cookies
-    try:
-        return Cookies[0] #TO DO: FIX
-    except:
-        return "login"
+    return Cookies[cookie]
 
 
 # may god have mercy upon me
@@ -43,7 +39,7 @@ async def Timings(): #za ile sekund aktualizuje sie rynek
 
 @app.get("/player")
 async def DaneGracza() -> str:
-    login = get_login()
+    login = extract_login_from_request()
     if login in Users:
         return str(Users[login])
     return "{nie jestes zalogowany albo nie istniejesz}"
@@ -52,7 +48,7 @@ async def DaneGracza() -> str:
 async def Buy(nazwa: str, ilosc: int) -> bool:
     data = await request.json()
 
-    login = data["login"]
+    login = extract_login_from_request(["cookie"])
     ilosc = data["ilosc"]
     nazwa = data["nazwa"]
 
@@ -71,7 +67,7 @@ async def Buy(nazwa: str, ilosc: int) -> bool:
 async def Sell(request: Request) -> bool:
     data = await request.json()
 
-    login = data["login"]
+    login = extract_login_from_request(["cookie"])
     ilosc = data["ilosc"]
     nazwa = data["nazwa"]
 
