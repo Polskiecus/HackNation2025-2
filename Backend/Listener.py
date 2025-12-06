@@ -36,7 +36,6 @@ async def get_login() -> str:
     except:
         return "login"
 '''
->>>>>>> origin/main
 
 # may god have mercy upon me
 async def RunAtIntervals(func):
