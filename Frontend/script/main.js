@@ -1,14 +1,14 @@
 const cities = [
-    { left: 0.6, top: 0.4, name: "Warszawa" },
+    { left: 0.6, top: 0.4, name: "Warszawa", img: "https://go2warsaw.pl/wp-content/uploads/panorama-fot-mst-warszawa-4.jpg" },
     // { left: 0.46, top: 0.46, name: "Łódź" },
-    { left: 0.5, top: 0.8, name: "Kraków" },
-    { left: 0.35, top: 0.3, name: "Bydgoszcz" },
-    { left: 0.42, top: 0.06, name: "Gdańsk" },
-    { left: 0.018, top: 0.18, name: "Szczecin" },
+    { left: 0.5, top: 0.8, name: "Kraków", img: "https://polish-presidency.consilium.europa.eu/media/2xljqezp/54384915012_fc48f51f41_o.jpg?cc=0.11391683504101668,0.0000000000000001162045249594,0.11356012787117589,0&width=2080&height=1170&v=1db94ddf00c9000" },
+    { left: 0.35, top: 0.3, name: "Bydgoszcz", img: "https://pulspodrozy.pl/wp-content/smush-webp/2024/12/byd5_anonymized.jpg.webp" },
+    { left: 0.42, top: 0.06, name: "Gdańsk", img: "https://www.qubushotel.com/wp-content/uploads/1535628682_1594812197-1200x675.png" },
+    { left: 0.018, top: 0.18, name: "Szczecin", img: "https://images.immediate.co.uk/production/volatile/sites/63/2024/08/szczecin-794fc03.jpeg?resize=1366,911" },
     // { left: 0.25, top: 0.38, name: "Poznań" },
-    { left: 0.27, top: 0.6, name: "Wrocław" },
-    { left: 0.8, top: 0.58, name: "Lublin" },
-    { left: 0.85, top: 0.28, name: "Białystok" },
+    { left: 0.27, top: 0.6, name: "Wrocław", img: "https://dolnyslask.travel/_ipx/_/https://dst-cms.frogriot.com/wp-content/uploads/2024/10/shutterstock_ostrow_tumski_1920.png" },
+    { left: 0.8, top: 0.58, name: "Lublin", img: "https://cdn.wiadomosci.onet.pl/1/rj4k9lBaHR0cHM6Ly9vY2RuLmV1L3B1bHNjbXMvTURBXy9iYjJhMTIyMGEzY2E2M2YzMjUyNGRmZDBmZWNhMTZhMC5qcGeSlQMAzNbNDvDNCGeTBc0JYM0E7N4AAqEwB6ExBA" },
+    { left: 0.85, top: 0.28, name: "Białystok", img: "https://www.evertrek.pl/userdata/public/news/images/229.jpg" },
 ];
 
 const prices = [-10, 20, 15, 80, 10, 0, 200, 8];
@@ -17,6 +17,7 @@ const PolandMap = document.getElementById("poland-map");
 const citiesParent = document.getElementById("cities");
 const infoWindow = document.getElementById("info-window");
 const infoHeader = document.getElementById("info-header");
+const infoImg = document.getElementById("info-img");
 const canvas = document.getElementById("stock-graph");
 const ctx = canvas.getContext("2d");
 
@@ -40,16 +41,16 @@ function refreshCities() {
         let pw = rect.width;
         let ph = rect.height;
         citiesParent.innerHTML +=
-            `<div class="city" id="` + cities[i].name + `" style="left: ` + cities[i].left * pw + `px; top: ` + cities[i].top * ph + `px">
-        <div class="city-point` + selectedColor + `" onclick="clickCity('` + cities[i].name + `')"></div>
-        <div class="city-name">` + cities[i].name + `</div>
-    </div>`;
+            `<div class="city" id="` + cities[i].name + `" style="left: ` + cities[i].left * pw + `px; top: ` + cities[i].top * ph + `px" onclick="clickCity('` + cities[i].name + `', '` + cities[i].img + `')">
+            <div class="city-point` + selectedColor + `"></div>
+            <div class="city-name">` + cities[i].name + `</div>
+        </div>`;
     }
 }
 
-function refreshCanvas(){
+function refreshCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     ctx.beginPath();
     const cw = (canvas.width - 2 * graphPaddingW);
     const ch = (canvas.height - 2 * graphPaddingH);
@@ -96,10 +97,11 @@ function refreshCanvas(){
     ctx.stroke();
 }
 
-function clickCity(city) {
+function clickCity(name, img) {
     infoWindow.style.display = "unset";
-    infoHeader.innerHTML = city;
-    selectedCity = city;
+    infoHeader.innerHTML = name;
+    infoImg.src = img;
+    selectedCity = name;
     refreshCities();
 }
 
@@ -108,7 +110,7 @@ function polandClick() {
     refreshCities();
     infoWindow.style.display = "none";
 }
-
+/*
 fetch(new URL("http://localhost:8000/register"),
     {
         method: "POST",
@@ -143,7 +145,7 @@ fetch(new URL("http://localhost:8000/log_in"),
         fetch(new URL("http://localhost:8000/set-cookie"),
             {
                 method: "POST",
-                body: JSON.stringify({"value": 10})
+                body: JSON.stringify({ "value": 10 })
             }).then(res => res.json())
             .then(res => { console.log(res); });
 
@@ -153,10 +155,10 @@ fetch(new URL("http://localhost:8000/log_in"),
             }).then(res => res.json())
             .then(res => { console.log(res); });
 
-            
+
 
     });
-
+*/
 function deleteAllCookies() {
     document.cookie.split(';').forEach(cookie => {
         const eqPos = cookie.indexOf('=');

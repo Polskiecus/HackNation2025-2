@@ -115,7 +115,7 @@ h3{
 }
 
 .city-name{
-    cursor: default;
+    cursor: pointer;
     transform: translateX(20px);
     position: relative;
     color: white;
@@ -130,7 +130,7 @@ h3{
 
 .window{
     position: fixed;
-    padding: 8px;
+    padding: 16px;
     background-color: rgba(0, 0, 0, 0.15);
 }
 
@@ -139,12 +139,16 @@ h3{
     right: 0;
     top: 50%;
     transform: translate(0, -50%);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
 }
 
 #stock-window{
     left: 0;
     top: 50%;
     transform: translate(0, -50%);
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
 }
 
 .selected-city{
@@ -182,4 +186,15 @@ h3{
     height: 400px;
     background: #000000;
     background: radial-gradient(circle,rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%);
+}
+
+#info-img-mask{
+    border-radius: 8px;
+    height: 170px;
+    width: 300px;
+    overflow: hidden;
+}
+
+#info-img-mask img{
+    width: 110%;
 }
