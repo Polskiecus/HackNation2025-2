@@ -128,9 +128,11 @@ async def Sell(request: Request) -> bool:
 
 @app.post("/region_firms")
 async def RegionFirms(request: Request):
+	global main_scheduler
 	data = await request.json()
+	region = data["region"]
 
-	return ["NanoHard"]
+	return [akcja for akcja in main_scheduler.akcje if region in akcja.region.split(";")]
 
 @app.get("/firminfo")
 async def FirmInfo(request: Request):
