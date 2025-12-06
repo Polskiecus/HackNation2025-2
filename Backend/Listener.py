@@ -50,6 +50,7 @@ async def Register(request: Request):
 
 @app.get("/cookie-info")
 async def CheckUser(request: Request):
+	global Cookies
 	data = await request.json()
 
 	if data["Cookie"] in Cookies:
