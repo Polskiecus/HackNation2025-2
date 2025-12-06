@@ -6,7 +6,12 @@
 import json
 import time
 import os
+from random import uniform
 
+import NewsHandler
+from NewsHandler import News
+
+from Backend.NewsHandler import NewsHandler
 
 '''
 #======#
@@ -118,12 +123,17 @@ class Akcja:
 class Scheduler:
 
 	def __init__(self, akcje: [Akcja]=[], time_to_pass: float=0.2):
-
+		self.news_handler = NewsHandler.LoadFolder()
 		self.akcje = {akcja.nazwa: akcja for akcja in akcje}
 		self.time_to_pass = time_to_pass
 		self.last_checked = time.time()
 
-	def check_for_update(self):
+    def check_for_update(self):
+        if uniform(0, 1) < 0.8: #dodaj losowego newsa
+            wylosowany_news: News = self.news_handler.get_news()
+            for firma in wylosowany_news.efekty:
+                self.akcje[firma].czynniki.append(wylosowany_news.efekty[firma])
+
 
 		if self.last_checked + self.time_to_pass < time.time():
 			self.update()
@@ -141,4 +151,3 @@ class Scheduler:
 
 		else:
 			self.akcje[nazwa].dodaj_czynnik(czynnik)
-
