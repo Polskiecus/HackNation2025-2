@@ -18,6 +18,13 @@ class User:
     def __str__(self):
         return r"{" + f"login: {self.login}, bilans: {self.bilans}, akcje: " + json.dumps(self.akcje) + r"}"
 
+    def read_from_json(self, json_data: json) -> User:
+        self.akcje = json_data["akcje"]
+        self.bilans = json_data["bilans"]
+        self.password = json_data["password"]
+        self.login = json_data["login"]
+        return self
+
     def get_bilans(self) -> (bool, float): #zwraca ile gracz ma kasy
         return (True, self.bilans)
 
@@ -92,3 +99,12 @@ class User:
                 return (False)
         enemy.bilans //= 2 #zrzuc polowe kasy w nicosc
         return (True)
+
+def read_users_from_file() -> dict[str, User]:
+    f = open("./users.json")
+    data = json.load(f)
+    users: dict[str, User] = {}
+    for item in data:
+        users[item["login"]] = User.read_from_json(item)
+    f.close()
+    return users
