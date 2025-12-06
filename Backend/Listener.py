@@ -29,16 +29,6 @@ def extract_login_from_request(cookie: int):
 	except:
 		print("you retarded as fuck")
 		pass
-# REDUNDANT:
-'''
-@app.get("/get_username") #TO DO: IMPLEMENT, BARDZO WAZNE
-async def get_login() -> str:
-    global Cookies
-    try:
-        return Cookies[0] #TO DO: FIX
-    except:
-        return "login"
-'''
 
 # may god have mercy upon me
 async def RunAtIntervals(func):
@@ -50,13 +40,6 @@ async def RunAtIntervals(func):
 @app.get("/timings")
 async def Timings(): #za ile sekund aktualizuje sie rynek
 	return "" #TODO:
-
-@app.get("/player")
-async def DaneGracza() -> str:
-    login = extract_login_from_request()
-    if login in Users:
-        return str(Users[login])
-    return "{nie jestes zalogowany albo nie istniejesz}"
 
 @app.get("/buy")
 async def Buy(nazwa: str, ilosc: int) -> bool:
