@@ -72,7 +72,7 @@ async def FirmInfo():
 
 @app.get("/newsy")
 async def Newsy():
-	return ""
+	return ["Polska Upada inwazja III rzeszy!!!!!", "Jan Pat 2 pierdnął"]
 
 @app.post("/log_in")
 async def Login(request: Request):
