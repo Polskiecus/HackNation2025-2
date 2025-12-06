@@ -5,6 +5,7 @@ import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 from User import User
 from main import main_scheduler
+from main import main_users
 
 app = FastAPI()
 Users: dict[str, User]   = {} #dict[login, user]
@@ -21,6 +22,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+<<<<<<< HEAD
+def extract_login_from_request(cookie: int):
+    global Cookies
+    return Cookies[cookie]
+
+=======
 
 # REDUNDANT:
 '''
@@ -32,6 +39,7 @@ async def get_login() -> str:
     except:
         return "login"
 '''
+>>>>>>> origin/main
 
 # may god have mercy upon me
 async def RunAtIntervals(func):
@@ -46,24 +54,47 @@ async def Timings(): #za ile sekund aktualizuje sie rynek
 
 @app.get("/player")
 async def DaneGracza() -> str:
-    login = get_login()
+    login = extract_login_from_request()
     if login in Users:
         return str(Users[login])
     return "{nie jestes zalogowany albo nie istniejesz}"
 
 @app.get("/buy")
 async def Buy(nazwa: str, ilosc: int) -> bool:
-    login = get_login()
-    if login in Users:
-        return Users[login].sprzedaj_akcje(nazwa, ilosc)[0]
-    return False
+    data = await request.json()
+
+    login = extract_login_from_request(["cookie"])
+    ilosc = data["ilosc"]
+    nazwa = data["nazwa"]
+
+    if login not in Users:
+        return False
+
+    try:
+        ilosc = int(ilosc)
+    except:
+        return False  # nie wykonalo sie
+
+    return main_users[login].kup_akcje(nazwa, ilosc)[0]
+
 
 @app.get("/sell")
-async def Sell(nazwa: str, ilosc: int) -> bool:
-    login = get_login()
-    if login in Users:
-        return Users[login].kup_akcje(nazwa, ilosc)[0]
-    return False
+async def Sell(request: Request) -> bool:
+    data = await request.json()
+
+    login = extract_login_from_request(["cookie"])
+    ilosc = data["ilosc"]
+    nazwa = data["nazwa"]
+
+    if login not in Users:
+        return False
+
+    try:
+        ilosc = int(ilosc)
+    except:
+        return False  # nie wykonalo sie
+
+    return main_users[login].sprzedaj_akcje(nazwa, ilosc)[0]
 
 @app.get("/region_firms")
 async def RegionFirms(request: Requests):
