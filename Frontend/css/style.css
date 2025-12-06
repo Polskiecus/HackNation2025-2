@@ -61,6 +61,8 @@ body{
     /* bottom: 0; */
     /* position: absolute; */
     animation: newsScroll 10s linear infinite;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 #bottom #news2{
@@ -107,7 +109,6 @@ h3{
 }
 
 .city-point{
-    cursor: pointer;
     width: 16px;
     height: 16px;
     transform: rotateZ(45deg);
@@ -115,7 +116,6 @@ h3{
 }
 
 .city-name{
-    cursor: pointer;
     transform: translateX(20px);
     position: relative;
     color: white;
@@ -125,6 +125,7 @@ h3{
 }
 
 .city{
+    cursor: pointer;
     position: absolute;
 }
 
@@ -132,6 +133,7 @@ h3{
     position: fixed;
     padding: 16px;
     background-color: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(2px);
 }
 
 #info-window{

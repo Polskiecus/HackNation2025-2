@@ -50,7 +50,9 @@ async def Timings(): #za ile sekund aktualizuje sie rynek
 
 @app.get("/player")
 async def DaneGracza() -> str:
-    login = extract_login_from_request()
+	data = await request.json()
+
+    login = extract_login_from_request(data["cookie"])
     if login in Users:
         return str(Users[login])
     return "{nie jestes zalogowany albo nie istniejesz}"
@@ -78,7 +80,7 @@ async def Buy(nazwa: str, ilosc: int) -> bool:
 async def Sell(request: Request) -> bool:
     data = await request.json()
 
-    login = extract_login_from_request(["cookie"])
+    login = extract_login_from_request(data["cookie"])
     ilosc = data["ilosc"]
     nazwa = data["nazwa"]
 
