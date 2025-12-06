@@ -26,6 +26,44 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+bullshit_news = [
+"Papież Pierdnął",
+"Pies spadł z drzewa",
+"Ktoś potrącił staruszkę",
+"Prezydent znowu kłamie! SKANDL",
+"GUS zapomniał opublikować danych",
+"Szop się upił",
+"tojoda kojolla na promocji",
+"Dzień Matki już za tydzień",
+"niedziela niehandlowa",
+"słój pękł",
+"jeden kubek nie wystarcza",
+"pepsi kosztuje złotówke wiecej",
+"alkohol w sejmie",
+"dzisiaj pogoda jak zwykle",
+"Ładna dziś pogoda",
+"hPa wynosi 997",
+"Szpitale pełne",
+"prezydent spotkał się z bezdomnymi",
+"nauczyciel zadał pracę domową !SZOK! teraz grozi mu więzienie",
+"nic się nie stało",
+"dziura czasoprzestrzenna odnaleziona w bydgoszczy",
+"odkryta przód zadzidzia dzidy bojowej",
+"metro w warszawie spóźniło się 2,5 minuty",
+"bob budowniczy nie zbudował",
+"listonosz pat nie zdążył",
+"pękła guma w bolidzie ale dojehał do mety[PRAWDZIWA HISTORIA]",
+"Polska wciąż pozostaje na pierwszym miejscu liczby wypadków samochodowych",
+"SZOKUJĄCE PROJEKCJE: Polacy nie jedzą mięsa?!",
+"Całe życie źle piłeś wode, amerykańscy naukowcy dokonali szokującego odkrycia",
+"kawa się wystudziła",
+"Biedronka w mszczonowie jednak się nie otworzy",
+"Wojny pod empikiem! zajęli dział z beletrystyką!",
+"Half life 3 wciąż nie wyszedł",
+"GTA 6?!! ujawiona data"
+]
+
 @app.get("/players")
 def Players():
 	global Users
@@ -102,7 +140,11 @@ async def FirmInfo(request: Request):
 
 @app.get("/newsy")
 async def Newsy():
-	return ["Polska Upada inwazja III rzeszy!!!!!", "Jan Pat 2 pierdnął"]
+	global main_scheduler
+	temp = [main_scheduler.get_a_news()]
+	if temp == [None]: temp = [some_bullshit()]
+	else random.rand() < 0.6: temp = [some_bullshit()]
+	return temp
 
 @app.post("/log_in")
 async def Login(request: Request):
@@ -135,13 +177,6 @@ async def Register(request: Request):
 	else:
 		Users[data["login"]] = {"pwd": data["pwd"]}
 		return "User created!"
-'''
-@app.post("/set-cookie")
-async def SetCookie(response: Response, request: Request):
-	data = await request.json()
-	response.set_cookie(key="token", value=data["value"])
-	return "set"
-'''
 
 @app.post("/cookie-info")
 async def CheckUser(request: Request):
@@ -152,6 +187,10 @@ async def CheckUser(request: Request):
 	if data["cookie"] in Cookies: return Cookies[data["cookie"]]
 	return "Invalid cookie"
 
+
+def some_bullshit():
+	global bullshit_news
+	return random.choice(bullshit_news)
 
 if __name__ == "__main__":
 

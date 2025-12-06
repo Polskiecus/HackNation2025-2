@@ -129,15 +129,19 @@ class Scheduler:
 		self.akcje = {akcja.nazwa: akcja for akcja in akcje}
 		self.time_to_pass = time_to_pass
 		self.last_checked = time.time()
+		self.ostatni_news = None
+
 
 	def check_for_update(self):
 		if uniform(0, 1) < 0.8: #dodaj losowego newsa
 			wylosowany_news: News = self.news_handler.get_news()
+			self.ostatni_news = wylosowany_news
 
 			for firma in wylosowany_news.efekty:
 				for item in wylosowany_news:
 					self.push_changes(item, wylosowany_news[item])
-
+		else:
+			self.ostatni_news = wylosowany_news
 
 		if self.last_checked + self.time_to_pass < time.time():
 			self.update()
@@ -147,6 +151,9 @@ class Scheduler:
 
 		for akcja in self.akcje:
 			self.akcje[akcja].update()
+
+	def get_a_news(self):
+		return self.news_handler.ostatni_news
 
 	def push_changes(self, nazwa: str, czynnik: float):
 
