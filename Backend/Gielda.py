@@ -114,4 +114,3 @@ class Scheduler:
 		else:
 			self.akcje[nazwa].dodaj_czynnik(czynnik)
 
-main_scheduler = Scheduler(loadAkcjeFromPath("../Firmy/"), 60)

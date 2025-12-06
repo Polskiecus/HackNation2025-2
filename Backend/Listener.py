@@ -4,6 +4,7 @@ import random
 import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 from User import User
+from main import main_scheduler
 
 app = FastAPI()
 Users: dict[str, User]   = {} #dict[login, user]
@@ -24,7 +25,7 @@ app.add_middleware(
 async def get_login() -> str:
     global Cookies
     try:
-        return Cookies[0]
+        return Cookies[0] #TO DO: FIX
     except:
         return "login"
 
