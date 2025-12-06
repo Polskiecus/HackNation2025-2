@@ -1,11 +1,13 @@
+from math import lgamma
 from fastapi import FastAPI, Request, Cookie, Response
 import random
 import asyncio
 from fastapi.middleware.cors import CORSMiddleware
+from User import User
 
 app = FastAPI()
-Users   = {}
-Cookies = {}
+Users: dict[str, User]   = {} #dict[login, user]
+Cookies = {} #cos
 RUN     = True
 
 origins = ["*"]
@@ -17,6 +19,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/get_username") #TO DO: IMPLEMENT, BARDZO WAZNE
+async def get_login() -> str:
+    global Cookies
+    try:
+        return Cookies[]
+    except:
+        return "login"
+
 
 # may god have mercy upon me
 async def RunAtIntervals(func):
@@ -30,16 +41,25 @@ async def Timings():
 	return "" #TODO:
 
 @app.get("/player")
-async def DaneGracza(): # TODO:
-	return ""
+async def DaneGracza() -> str:
+    login = get_login()
+    if login in Users:
+        return str(Users[login])
+    return "{nie jestes zalogowany albo nie istniejesz}"
 
 @app.get("/buy")
-async def Buy():
-	return ""
+async def Buy(nazwa: str, ilosc: int) -> bool:
+    login = get_login()
+    if login in Users:
+        return Users[login].sprzedaj_akcje(nazwa, ilosc)[0]
+    return False
 
 @app.get("/sell")
-async def Sell():
-	return ""
+async def Sell(nazwa: str, ilosc: int) -> bool:
+    login = get_login()
+    if login in Users:
+        return Users[login].kup_akcje(nazwa, ilosc)[0]
+    return False
 
 @app.get("/region_firms")
 async def RegionFirms():

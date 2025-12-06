@@ -6,15 +6,17 @@ from random import uniform
 class User:
     akcje: dict[str, int]
     bilans: float
-    id: int
+    name: str
+    password: str
 
-    def __init__(self, id: int):
+    def __init__(self, login: str, password: str):
         self.akcje = {}
         self.bilans = 0
-        self.id = id
+        self.login = login
+        self.password = password
 
     def __str__(self):
-        return r"{" + f"bilans: {self.bilans}, id: {id}, akcje: " + json.dumps(self.akcje) + r"}"
+        return r"{" + f"login: {self.login}, bilans: {self.bilans}, akcje: " + json.dumps(self.akcje) + r"}"
 
     def get_bilans(self) -> (bool, float): #zwraca ile gracz ma kasy
         return (True, self.bilans)
