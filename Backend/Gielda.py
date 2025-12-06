@@ -1,5 +1,6 @@
 import json
 import time
+import os
 
 
 FirmyPath = "../Firmy/"
@@ -26,7 +27,7 @@ def loadAkcjaFromFile(path: str) -> Akcja:
 
 class Akcja:
 
-	def __init__(self, nazwa: str="", wartosc: float=0, remaining_shares: int=0, historic_value: [float]):
+	def __init__(self, nazwa: str="", wartosc: float=0, remaining_shares: int=0, historic_value: [float]=[0]):
 
 		self.nazwa            = nazwa
 		self.wartosc          = wartosc
@@ -81,7 +82,7 @@ class Akcja:
 
 class Scheduler:
 
-	def __init__(self, akcje: [Akcja]=[], time_to_pass: float):
+	def __init__(self, akcje: [Akcja]=[], time_to_pass: float=0.2):
 
 		self.akcje = {akcja.nazwa: akcja for akcja in akcje}
 		self.time_to_pass = time_to_pass

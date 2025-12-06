@@ -15,7 +15,14 @@ class User:
         return (True, self.bilans)
 
     def get_networth(self) -> (bool, float): #oblicza ile "kasy" ma gracz
-
+        try:
+            suma_kasy = self.bilans
+            for nazwa_firmy in self.akcje.keys():
+                suma_kasy += Scheduler.akcje[nazwa_firmy] * self.akcje[nazwa_firmy]
+            return (True, suma_kasy)
+        except Exception as e:
+            return (False, e)
+        
     def kup_akcje(self, akcja: Akcja, ilosc: int) -> (bool):
         if ilosc > akcja.remaining_shares:
             print("za malo akcji")
