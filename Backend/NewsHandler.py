@@ -11,6 +11,7 @@ def LoadFromPath(path: str):
     f.close()
 
     return News(data["nazwa"], data["tresc"], data["efekty"])
+
 def LoadFolder(path: str=None):
     global PATH
     if path == None or path == "":
@@ -31,6 +32,7 @@ class News:
         self.nazwa  = nazwa
         self.tresc  = tresc
         self.efekty = efekty
+
 
     def __str__(self):
         return self.tresc
