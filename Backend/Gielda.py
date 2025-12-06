@@ -1,5 +1,6 @@
 import json
 
+FirmyPath = "../Firmy/"
 
 def loadAkcjeFromPath(path: str) -> Akcja:
 
@@ -35,7 +36,10 @@ class Akcja:
 
 		return f"{self.nazwa} {self.wartosc} {self.remaining_shares} {shares_total}"
 
-	def export(self, path: str):
+	def export(self, path: str=None):
+		global FirmyPath
+
+		if path == None: path = FirmyPath + self.nazwa
 
 		f = open(path, "w")
 		f.write(self.__str__)
