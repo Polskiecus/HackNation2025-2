@@ -59,7 +59,7 @@ async def DaneGracza() -> str:
 async def Buy(nazwa: str, ilosc: int) -> bool:
     data = await request.json()
 
-    login = extract_login_from_request(["cookie"])
+    login = extract_login_from_request(data["cookie"])
     ilosc = data["ilosc"]
     nazwa = data["nazwa"]
 
