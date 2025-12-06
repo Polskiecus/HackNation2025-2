@@ -52,7 +52,7 @@ async def DaneGracza() -> str:
 async def Buy(nazwa: str, ilosc: int) -> bool:
     data = await request.json()
 
-    login = get_login()
+    login = data["login"]
     ilosc = data["ilosc"]
     nazwa = data["nazwa"]
 
@@ -71,7 +71,7 @@ async def Buy(nazwa: str, ilosc: int) -> bool:
 async def Sell(request: Request) -> bool:
     data = await request.json()
 
-    login = get_login()
+    login = data["login"]
     ilosc = data["ilosc"]
     nazwa = data["nazwa"]
 
