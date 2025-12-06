@@ -101,10 +101,11 @@ class User:
         return (True)
 
 def read_users_from_file(path: str) -> dict[str, User]:
-    f = open(path)
-    data = json.load(f)
+    f = open(path).read()
+    data = json.loads(f)
+
     users: dict[str, User] = {}
     for item in data:
-        users[item["login"]] = User.read_from_json(item)
-    f.close()
+        new_ = User("a", "a")
+        users[item] = new_.read_from_json(data[item])
     return users
