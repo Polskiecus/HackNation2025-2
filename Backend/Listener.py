@@ -62,21 +62,21 @@ async def Buy(nazwa: str, ilosc: int) -> bool:
 
 @app.get("/sell")
 async def Sell(request: Request) -> bool:
-    data = await request.json()
+	data = await request.json()
 
-    login = extract_login_from_request(["cookie"])
-    ilosc = data["ilosc"]
-    nazwa = data["nazwa"]
+	login = extract_login_from_request(["cookie"])
+	ilosc = data["ilosc"]
+	nazwa = data["nazwa"]
 
-    if login not in Users:
-        return False
+	if login not in Users:
+		return False
 
-    try:
-        ilosc = int(ilosc)
-    except:
-        return False  # nie wykonalo sie
+	try:
+		ilosc = int(ilosc)
+	except:
+		return False  # nie wykonalo sie
 
-    return main_users[login].sprzedaj_akcje(nazwa, ilosc)[0]
+	return main_users[login].sprzedaj_akcje(nazwa, ilosc)[0]
 
 @app.post("/region_firms")
 async def RegionFirms(request: Request):
