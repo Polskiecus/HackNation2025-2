@@ -1,10 +1,12 @@
 from fastapi import FastAPI, Request, Cookie
 import random
+import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 Users   = {}
 Cookies = {}
+RUN     = True
 
 origins = ["*"]
 
@@ -15,6 +17,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# may god have mercy upon me
+async def RunAtIntervals(func):
+	global RUN
+	while RUN:
+		func()
+		await asyncio.sleep(1)
 
 @app.post("/log_in")
 async def Login(request: Request):
