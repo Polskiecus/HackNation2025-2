@@ -108,3 +108,20 @@ def read_users_from_file(path: str) -> dict[str, User]:
         new_ = User("a", "a")
         users[item] = new_.read_from_json(data[item])
     return users
+
+def write_users_to_file(path: str, users: dict[str, User]) -> None:
+    f = open(path, "w")
+    f.write("{")
+    cnt = 0
+    for login in users:
+        f.write('\n\t"' + login + '" : {\n')
+        f.write('\t\t"akcje" : ' + json.dumps(users[login].akcje) + ",\n")
+        f.write('\t\t"login" : "' + str(users[login].login) + '",\n')
+        f.write('\t\t"bilans" : ' + str(users[login].bilans) + ",\n")
+        f.write('\t\t"password" : "' + str(users[login].password) + '"\n')
+        f.write('\t}')
+        cnt += 1
+        if cnt != len(users):
+            f.write(',')
+    f.write("\n}")
+    f.close()

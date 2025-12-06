@@ -1,16 +1,20 @@
-from math import lgamma
 from fastapi import FastAPI, Request, Cookie, Response
-import random
-import asyncio
 from fastapi.middleware.cors import CORSMiddleware
+from math import lgamma
+import asyncio
+import random
+import time
+
+
 from User import User
 from main import main_scheduler
 from main import main_users
+from Listener import *
+from Gielda import *
+from User import *
+from NewsHandler import *
+import time
 
-app = FastAPI()
-Users: dict[str, User]   = {} #dict[login, user]
-Cookies = {} #cos
-RUN     = True
 
 origins = ["*"]
 
@@ -21,6 +25,49 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+bullshit_news = [
+"Papież Pierdnął",
+"Pies spadł z drzewa",
+"Ktoś potrącił staruszkę",
+"Prezydent znowu kłamie! SKANDL",
+"GUS zapomniał opublikować danych",
+"Szop się upił",
+"tojoda kojolla na promocji",
+"Dzień Matki już za tydzień",
+"niedziela niehandlowa",
+"słój pękł",
+"jeden kubek nie wystarcza",
+"pepsi kosztuje złotówke wiecej",
+"alkohol w sejmie",
+"dzisiaj pogoda jak zwykle",
+"Ładna dziś pogoda",
+"hPa wynosi 997",
+"Szpitale pełne",
+"prezydent spotkał się z bezdomnymi",
+"nauczyciel zadał pracę domową !SZOK! teraz grozi mu więzienie",
+"nic się nie stało",
+"dziura czasoprzestrzenna odnaleziona w bydgoszczy",
+"odkryta przód zadzidzia dzidy bojowej",
+"metro w warszawie spóźniło się 2,5 minuty",
+"bob budowniczy nie zbudował",
+"listonosz pat nie zdążył",
+"pękła guma w bolidzie ale dojehał do mety[PRAWDZIWA HISTORIA]",
+"Polska wciąż pozostaje na pierwszym miejscu liczby wypadków samochodowych",
+"SZOKUJĄCE PROJEKCJE: Polacy nie jedzą mięsa?!",
+"Całe życie źle piłeś wode, amerykańscy naukowcy dokonali szokującego odkrycia",
+"kawa się wystudziła",
+"Biedronka w mszczonowie jednak się nie otworzy",
+"Wojny pod empikiem! zajęli dział z beletrystyką!",
+"Half life 3 wciąż nie wyszedł",
+"GTA 6?!! ujawiona data"
+]
+
+@app.get("/players")
+def Players():
+	global Users
+	return [name for name in Users]
 
 def extract_login_from_request(cookie: int):
 	try:
@@ -39,7 +86,8 @@ async def RunAtIntervals(func):
 
 @app.get("/timings")
 async def Timings(): #za ile sekund aktualizuje sie rynek
-	return "" #TODO:
+	global main_scheduler
+	return main_scheduler.time_to_pass + main_scheduler.last_checked - time.time()
 
 @app.get("/buy")
 async def Buy(nazwa: str, ilosc: int) -> bool:
@@ -80,9 +128,11 @@ async def Sell(request: Request) -> bool:
 
 @app.post("/region_firms")
 async def RegionFirms(request: Request):
+	global main_scheduler
 	data = await request.json()
+	region = data["region"]
 
-	return ["NanoHard"]
+	return [akcja for akcja in main_scheduler.akcje if region in akcja.region.split(";")]
 
 @app.get("/firminfo")
 async def FirmInfo(request: Request):
@@ -92,7 +142,11 @@ async def FirmInfo(request: Request):
 
 @app.get("/newsy")
 async def Newsy():
-	return ["Polska Upada inwazja III rzeszy!!!!!", "Jan Pat 2 pierdnął"]
+	global main_scheduler
+	temp = [main_scheduler.get_a_news()]
+	if temp == [None]: temp = [some_bullshit()]
+	else random.rand() < 0.6: temp = [some_bullshit()]
+	return temp
 
 @app.post("/log_in")
 async def Login(request: Request):
@@ -125,13 +179,6 @@ async def Register(request: Request):
 	else:
 		Users[data["login"]] = {"pwd": data["pwd"]}
 		return "User created!"
-'''
-@app.post("/set-cookie")
-async def SetCookie(response: Response, request: Request):
-	data = await request.json()
-	response.set_cookie(key="token", value=data["value"])
-	return "set"
-'''
 
 @app.post("/cookie-info")
 async def CheckUser(request: Request):
@@ -141,3 +188,18 @@ async def CheckUser(request: Request):
 	if "cookie" not in data: return "NO COOKIE?"
 	if data["cookie"] in Cookies: return Cookies[data["cookie"]]
 	return "Invalid cookie"
+
+
+def some_bullshit():
+	global bullshit_news
+	return random.choice(bullshit_news)
+
+if __name__ == "__main__":
+
+	main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
+	main_scheduler = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
+	app = FastAPI()
+	Users: dict[str, User]   = {} #dict[login, user]
+	Cookies = {} #cos
+	RUN     = True
+	RunAtIntervals(main_scheduler.check_for_update)
