@@ -90,6 +90,8 @@ class Akcja:
 
 	def update(self):
 
+		self.historic_value.append(self.wartosc)
+
 		for czynnik in czynniki:
 			self.wartosc *= czynnik
 
