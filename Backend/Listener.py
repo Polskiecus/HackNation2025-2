@@ -22,6 +22,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/players")
+def Players():
+	global Users
+	return [name for name in Users]
+
 def extract_login_from_request(cookie: int):
 	try:
 		global Cookies
