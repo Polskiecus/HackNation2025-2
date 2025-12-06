@@ -1,8 +1,11 @@
-from math import lgamma
 from fastapi import FastAPI, Request, Cookie, Response
-import random
-import asyncio
 from fastapi.middleware.cors import CORSMiddleware
+from math import lgamma
+import asyncio
+import random
+import time
+
+
 from User import User
 from main import main_scheduler
 from main import main_users
@@ -12,12 +15,6 @@ from User import *
 from NewsHandler import *
 import time
 
-main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
-main_scheduler = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
-app = FastAPI()
-Users: dict[str, User]   = {} #dict[login, user]
-Cookies = {} #cos
-RUN     = True
 
 origins = ["*"]
 
@@ -156,4 +153,12 @@ async def CheckUser(request: Request):
 	return "Invalid cookie"
 
 
+if __name__ == "__main__":
 
+	main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
+	main_scheduler = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
+	app = FastAPI()
+	Users: dict[str, User]   = {} #dict[login, user]
+	Cookies = {} #cos
+	RUN     = True
+	RunAtIntervals(main_scheduler.check_for_update)
