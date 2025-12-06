@@ -34,6 +34,7 @@ class Akcja:
 		self.shares_total     = shares_total
 
 		self.historic_value   = historic_value
+		self.czynniki         = []
 
 	def __str__(self):
 
@@ -56,10 +57,12 @@ class Akcja:
 		f.write(self.__str__)
 		f.close()
 
-	def update(self, czynniki: float):
+	def update(self):
 
 		for czynnik in czynniki:
 			self.wartosc *= czynnik
+
+		self.czynniki = []
 
 	def reload_from_file(self, path: str):
 
@@ -72,6 +75,9 @@ class Akcja:
 		self.wartosc = float(data[1])
 		self.remaining_shares = int(data[2])
 		self.historic_value   = [float(item) for item in historic.split() if item != ""]
+
+	def dodaj_czynnik(czynnik: float):
+		self.czynniki.append(czynnik)
 
 class Scheduler:
 
