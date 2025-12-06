@@ -1,0 +1,91 @@
+*{
+    font-family: "Roboto", sans-serif;
+}
+
+body{
+    margin: 0 auto;
+    background-color: #222222;
+    color: white;
+}
+
+#center{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#top{
+    position: fixed;
+    top: 0;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, 0);
+}
+
+#bottom{
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, 0);
+}
+
+#poland-map{
+    width: 300px;
+}
+
+#money{
+    font-weight: bolder;
+}
+
+h1{
+    margin: 0;
+}
+
+h3{
+    margin: 0;
+}
+
+.city-point{
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    transform: rotateZ(45deg);
+    background-color: red;
+}
+
+.city-name{
+    cursor: default;
+    transform: translateX(20px);
+    position: relative;
+    color: black;
+    font-size: 0.8em;
+}
+
+.city{
+    position: absolute;
+}
+
+.window{
+    position: fixed;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.15);
+    display: none;
+}
+
+#info-window{
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+#stock-window{
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.selected-city{
+    background-color: rgb(255, 187, 0);
+}
