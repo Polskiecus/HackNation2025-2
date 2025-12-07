@@ -241,16 +241,15 @@ async def AccValue(request: Request):
 
 @app.post("/peep")
 async def Peep(request: Request):
-	global Cookies, main_users, main_scheduler
 	data = await request.json()
 	login = extract_login_from_request(data["cookie"])
 	woman = data["woman"]
 	success = data["success"]
+
 	if success == False:
 		main_users[login].bilans = 0
 		return True
 	return main_users[woman].get_networth(main_scheduler)[1] * uniform(0.7, 1/0.7)
-
 #def startup():
 #	global RUN
 #	while RUN:
