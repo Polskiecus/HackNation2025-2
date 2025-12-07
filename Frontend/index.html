@@ -29,7 +29,7 @@
 
     <div id="game" style="display: none;">
 
-        
+
         <div id="left-top">
             <h1 id="nickname"></h1>
         </div>
@@ -113,16 +113,26 @@
 
         <div class="window-panel" id="social-panel" onclick="socialClose()">
             <div class="window" id="social-window">
-                <h1>Players</h1>
-                <div id="players-list"></div>
+                <h1>Gracze</h1>
+                <div id="players-scroll">
+                    <table id="players-list">
+                        <!-- <tr>
+                        <th>Nazwa</th>
+                        <th>Fundusze</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <span id="players-list"></span> -->
+                    </table>
+                </div>
             </div>
         </div>
 
         <div class="window-panel" id="news-panel" onclick="newsClose()">
             <div class="window" id="news-window">
                 <h1>News</h1>
-                <div id="players-list">
-                    
+                <div id="news-list">
+
                 </div>
             </div>
         </div>

@@ -36,7 +36,8 @@ const passwordInput = document.getElementById("password-input");
 const nickname = document.getElementById("nickname");
 const timer = document.getElementById("date");
 
-const playerList = document.getElementById("player-list");
+const playersList = document.getElementById("players-list");
+const newsList = document.getElementById("news-list");
 
 const graphPaddingH = 8;
 const graphPaddingW = 0;
@@ -63,8 +64,8 @@ setInterval(() => {
         .then(res => {
             timer.innerHTML = Math.round(res);
         });
-        fetch(new URL("http://localhost:8000/newsy")).then(res => res.json())
-            .then(res => { console.log(res); loadedNews = res; refreshNewsBar(); });
+    fetch(new URL("http://localhost:8000/newsy")).then(res => res.json())
+        .then(res => { loadedNews = res; refreshNewsBar(); });
 }, 500);
 
 function refreshCities() {
@@ -138,11 +139,22 @@ function refreshNewsBar() {
 }
 
 function clickCity(name, img) {
-    infoWindow.style.display = "unset";
-    infoHeader.innerHTML = name;
-    infoImg.src = img;
-    selectedCity = name;
-    refreshCities();
+    fetch(new URL("http://localhost:8000/region_firms"),
+        {
+            method: "POST",
+            body: JSON.stringify({
+                "region": name
+            })
+
+        }).then(res => res.json())
+        .then(res => {
+            infoWindow.style.display = "unset";
+            infoHeader.innerHTML = name;
+            infoImg.src = img;
+            selectedCity = name;
+            refreshCities();
+            console.log(res);
+        });
 }
 
 function polandClick() {
@@ -153,11 +165,22 @@ function polandClick() {
 
 function socialOpen() {
     socialPanel.style.display = "unset";
-    playerList.innerHTML = "";
+    playersList.innerHTML = `
+    <tr>
+                        <th>Nazwa</th>
+                        <th>Fundusze</th>
+                        <th></th>
+                        <th></th>
+                    </tr>`;
     fetch(new URL("http://localhost:8000/players")).then(res => res.json())
         .then(res => {
             for (let i = 0; i < res.length; i++) {
-                playerList.innerHTML += "<div class='player-list-item'>" + res[i] + "</div>";
+                playersList.innerHTML += `<tr><td class='player-list-item'>` +
+                    res[i] +
+                    `</td>
+                    <td>?</td>
+                    <td><button>Sabotaż</button></td>
+                    <td><button>Sprawdź</button></td></tr>`;
             }
         });
 }
@@ -174,6 +197,10 @@ function switchGraph() {
 
 function newsOpen() {
     newsPanel.style.display = "unset";
+    newsList.innerHTML = "";
+    for (let i = 0; i < loadedNews.length; i++) {
+                newsList.innerHTML += `<div class="news-list-item">` + loadedNews[i] + `</div>`;
+            }
 }
 
 function newsClose() {

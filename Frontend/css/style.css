@@ -1,14 +1,14 @@
-*{
+* {
     font-family: "Roboto", sans-serif;
 }
 
-body{
+body {
     margin: 0 auto;
     /* background-color: #222222; */
     color: white;
 }
 
-#background{
+#background {
     z-index: -9999;
     position: fixed;
     width: 200%;
@@ -20,15 +20,16 @@ body{
 }
 
 @keyframes backgroundScroll {
-    0%{
+    0% {
         background-position: 0px 0px;
     }
-    100%{
+
+    100% {
         background-position: 0px 500px;
     }
 }
 
-#center{
+#center {
     z-index: -10;
     position: fixed;
     left: 50%;
@@ -36,7 +37,7 @@ body{
     transform: translate(-50%, -50%);
 }
 
-#top{
+#top {
     pointer-events: none;
     position: fixed;
     top: 0;
@@ -46,7 +47,7 @@ body{
     padding: 4px;
 }
 
-#bottom{
+#bottom {
     /* width: 100%; */
     /* height: 100%; */
     position: fixed;
@@ -54,11 +55,12 @@ body{
     left: 50%;
     text-align: center;
     transform: translate(-50%, 0);
-    mask-image: linear-gradient(90deg,rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);;
+    mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);
+    ;
     cursor: pointer;
 }
 
-#bottom-above-news{
+#bottom-above-news {
     position: fixed;
     bottom: 24px;
     left: 50%;
@@ -66,14 +68,14 @@ body{
     transform: translate(-50%, 0);
 }
 
-#left-bottom{
+#left-bottom {
     position: fixed;
     bottom: 0;
     left: 0;
     border-top-right-radius: 16px;
 }
 
-#left-bottom button{
+#left-bottom button {
     cursor: pointer;
     width: 51px;
     height: 51px;
@@ -81,18 +83,18 @@ body{
     border: none;
 }
 
-#left-bottom button img{
+#left-bottom button img {
     width: 100%;
-} 
+}
 
-#left-top{
+#left-top {
     position: fixed;
     top: 0;
     left: 0;
     padding: 4px;
 }
 
-#bottom div{
+#bottom div {
     /* mask-image: linear-gradient(90deg,rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 100%);; */
     /* bottom: 0; */
     /* position: absolute; */
@@ -101,58 +103,58 @@ body{
     overflow: hidden;
 }
 
-#bottom #news2{
+#bottom #news2 {
     animation: newsScroll2 10s linear infinite;
     animation-delay: 5s;
     transform: translate(100%, -50%);
 }
 
 @keyframes newsScroll {
-    0%{
+    0% {
         transform: translate(102%, 100%);
     }
 
-    100%{
+    100% {
         transform: translate(-102%, 100%);
     }
 }
 
 @keyframes newsScroll2 {
-    0%{
+    0% {
         transform: translate(102%, 0);
     }
 
-    100%{
+    100% {
         transform: translate(-102%, 0);
     }
 }
 
-#poland-map{
+#poland-map {
     width: 300px;
     filter: drop-shadow(0px 16px 16px rgba(0, 0, 0, 0.3));
 }
 
-#money{
+#money {
     font-weight: bolder;
 }
 
-h1{
+h1 {
     margin: 0;
 }
 
-#stock-section h1{
+#stock-section h1 {
     margin-bottom: 8px;
 }
 
-h3{
+h3 {
     margin: 0;
 }
 
-h2{
+h2 {
     margin: 0;
 }
 
-.city-point{
+.city-point {
     width: 16px;
     height: 16px;
     transform: rotateZ(45deg);
@@ -163,39 +165,39 @@ h2{
     transition: 0.2s;
 }
 
-.city:hover .city-point{
+.city:hover .city-point {
     transition: 0.2s;
     outline-offset: 2px;
 }
 
-.selected-city{
+.selected-city {
     background-color: rgb(255, 187, 0);
     outline-color: rgb(255, 187, 0);
 }
 
-.city-name{
+.city-name {
     user-select: none;
     transform: translateX(20px);
     position: relative;
     color: white;
     font-size: 0.7em;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000,
-    -1px 0px 0 #000, 0px -1px 0 #000, 1px 0px 0 #000, 0px 1px 0 #000;
+        -1px 0px 0 #000, 0px -1px 0 #000, 1px 0px 0 #000, 0px 1px 0 #000;
 }
 
-.city{
+.city {
     cursor: pointer;
     position: absolute;
 }
 
-.window{
+.window {
     position: fixed;
     padding: 16px;
     background-color: rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(2px);
 }
 
-#info-window{
+#info-window {
     display: none;
     right: 0;
     top: 50%;
@@ -204,7 +206,7 @@ h2{
     border-bottom-left-radius: 16px;
 }
 
-#stock-window{
+#stock-window {
     left: 0;
     top: 50%;
     transform: translate(0, -50%);
@@ -212,14 +214,14 @@ h2{
     border-bottom-right-radius: 16px;
 }
 
-#stock-section{
+#stock-section {
     vertical-align: baseline;
     padding: 8px;
     padding-top: 0px;
     margin-right: -8px;
 }
 
-#stock-section button{
+#stock-section button {
     border-width: 1px;
     /* background-color: rgba(0, 0, 0, 0.5); */
     background-color: transparent;
@@ -233,19 +235,19 @@ h2{
     cursor: pointer;
 }
 
-#buy{
+#buy {
     color: green;
     border-color: green;
     margin-right: 8px;
 }
 
-#sell{
+#sell {
     color: red;
     border-color: red;
     margin: 0px;
 }
 
-#stock-graph{
+#stock-graph {
     border: 1px gray solid;
     width: 200px;
     height: 200px;
@@ -254,7 +256,7 @@ h2{
     margin: 0px;
 }
 
-#business-list button{
+#business-list button {
     cursor: pointer;
     /* border: 1px solid white; */
     border: none;
@@ -265,17 +267,17 @@ h2{
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-#business-list button:first-child{
+#business-list button:first-child {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
 
-#business-list button:last-child{
+#business-list button:last-child {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 }
 
-#business-list button img{
+#business-list button img {
     /* width: 30px; */
     width: 100%;
     /* padding: 5px; */
@@ -290,21 +292,21 @@ h2{
     width: 600px;
     height: 400px;
     background: #000000;
-    background: radial-gradient(circle,rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%);
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%);
 }
 
-#info-img-mask{
+#info-img-mask {
     border-radius: 8px;
     height: 170px;
     width: 300px;
     overflow: hidden;
 }
 
-#info-img-mask img{
+#info-img-mask img {
     width: 110%;
 }
 
-.window-panel{
+.window-panel {
     display: none;
     position: fixed;
     width: 100%;
@@ -313,7 +315,7 @@ h2{
     backdrop-filter: blur(4px);
 }
 
-#social-window{
+#social-window {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -321,21 +323,36 @@ h2{
     border-radius: 16px;
 }
 
-#players-list{
+#players-list {
     width: 400px;
-    height: 400px;
+    /* height: 400px; */
+    /* max-height: 400px; */
+}
+
+#players-scroll {
+    overflow: auto;
+    max-height: 400px;
+}
+
+#players-list tr {
+    text-align: center;
+}
+
+#news-window {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 16px;
+}
+
+#news-list{
+    width: 400px;
+    max-height: 400px;
     overflow: auto;
 }
 
-#news-window{
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 16px;
-}
-
-#login .window{
+#login .window {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -343,7 +360,7 @@ h2{
     border-radius: 8px;
 }
 
-input{
+input {
     background-color: rgba(255, 255, 255, 0.1);
     border: none;
     padding: 8px;
@@ -353,7 +370,7 @@ input{
     color: white;
 }
 
-#login button{
+#login button {
     background-color: rgba(255, 255, 255, 0.1);
     border: none;
     padding: 8px;
@@ -364,11 +381,11 @@ input{
     cursor: pointer;
 }
 
-#login button:first-child{
+#login button:first-child {
     margin-right: 0;
-    
+
 }
 
-#login button:last-child{
+#login button:last-child {
     margin-left: 0;
 }
