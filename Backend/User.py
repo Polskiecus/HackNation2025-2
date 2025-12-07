@@ -48,7 +48,7 @@ class User:
             return (False)
 
         #zwieksz cene akcji
-        akcja.dodaj_czynnik(ilosc/(akcja.remaining_shares+1))
+        akcja.dodaj_czynnik(1/(ilosc/(akcja.remaining_shares+1)))
         #stac i da sie kupic
         akcja.remaining_shares -= ilosc
         self.bilans -= akcja.shareprice() * ilosc
@@ -69,7 +69,7 @@ class User:
         #sprzedaj akcje, bo je masz
         self.akcje[akcja.nazwa] -= ilosc
         #obniz cene akcji
-        akcja.dodaj_czynnik(1/(ilosc/(akcja.remaining_shares+1)))
+        akcja.dodaj_czynnik((ilosc/(akcja.remaining_shares+1)))
         akcja.remaining_shares += ilosc
         self.bilans += akcja.shareprice() * ilosc
         return (True)
