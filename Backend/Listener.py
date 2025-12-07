@@ -137,7 +137,7 @@ async def RegionFirms(request: Request):
 	data = await request.json()
 	region = data["region"]
 
-	return [akcja for akcja in main_scheduler.akcje if region in akcja.region.split(";")]
+	return [akcja for akcja in main_scheduler.akcje if region in main_scheduler.akcje[akcja].region.split(";")]
 
 @app.get("/firminfo")
 async def FirmInfo(request: Request):
