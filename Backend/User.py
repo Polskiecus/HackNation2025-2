@@ -81,7 +81,8 @@ class User:
             return (False, -1, -1)
 
         self.bilans -= budzet
-        failure = 1/exp(budzet)
+        #failure = 1/exp(budzet)
+        failure = -1
         if uniform(0, 1) < failure:
             print("nie fart, nie udalo sie : (")
             return (False, -1, -1)
