@@ -130,7 +130,7 @@ async def Sell(request: Request) -> bool:
 	except:
 		return False  # nie wykonalo sie
 
-	return main_users[login].sprzedaj_akcje(nazwa, ilosc)[0]
+	return main_users[login].sprzedaj_akcje(main_scheduler.akcje[nazwa], ilosc)
 
 @app.post("/region_firms")
 async def RegionFirms(request: Request):
