@@ -75,7 +75,7 @@ class User:
             self.bilans += akcja.shareprice() * ilosc
         return (True)
 
-    def szacuj(self, enemy, budzet: float) -> (bool, float, float):
+    def szacuj(self, enemy, budzet: float) -> (bool, float, float): #zwraca (udalo sie, networth(), kasa na stanie)
         if budzet < self.bilans:
             print("zbyt biedny")
             return (False, -1, -1)
