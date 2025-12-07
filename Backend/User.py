@@ -87,9 +87,9 @@ class User:
             return (False, -1, -1)
         return (True, enemy.get_networth(), enemy.bilans)
 
-    def get_raided(self, scheduler):
+    def get_raided(self, scheduler) -> bool:
         for nazwa_firmy in self.akcje.keys():
-            if False == self.sprzedaj_akcje(scheduler.akcje[nazwa_firmy], (self.akcje[nazwa_firmy]+1)//2, zarabiaj=False):
+            if (False) == self.sprzedaj_akcje(scheduler.akcje[nazwa_firmy], (self.akcje[nazwa_firmy]+1)//2, zarabiaj=False):
                 return False
         self.bilans /= 2
         return True
