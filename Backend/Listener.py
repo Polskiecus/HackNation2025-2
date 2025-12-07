@@ -218,7 +218,7 @@ async def Raid(request: Request) -> bool:
 	global Cookies, main_users
 	data = await request.json()
 	login = extract_login_from_request(data["cookie"])
-	if data["success"] == "false":
+	if data["success"] == False:
 		return main_users[login].get_raided()
 	who_got_raided = data["raided"]
 	did_it = main_users[who_got_raided].get_raided()
