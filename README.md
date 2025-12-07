@@ -13,7 +13,7 @@ włącz ten skrypt z basha
   uvicorn Listener:app
 ```
 
-i wejdz na adres w przeglądarce [strona](Frontend/index.html)
+i otwórzcie plik index.html w przegladarce (jest w /Frontend/index.html)
 
 # podstawowe akcje
 
