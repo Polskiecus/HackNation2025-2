@@ -57,7 +57,7 @@ class User:
         self.akcje[akcja.nazwa] += ilosc
         return (True)
 
-    def sprzedaj_akcje(self, akcja: Gielda.Akcja, ilosc: int) -> (bool):
+    def sprzedaj_akcje(self, akcja: Gielda.Akcja, ilosc: int, zarabiaj: bool = True) -> (bool):
         if akcja.nazwa not in self.akcje:
             print("nie masz zadnej akcji")
             return (False)
@@ -71,7 +71,8 @@ class User:
         #obniz cene akcji
         akcja.dodaj_czynnik((ilosc/(akcja.remaining_shares+1)))
         akcja.remaining_shares += ilosc
-        self.bilans += akcja.shareprice() * ilosc
+        if zarabiaj:
+            self.bilans += akcja.shareprice() * ilosc
         return (True)
 
     def szacuj(self, enemy, budzet: float) -> (bool, float, float):
@@ -88,7 +89,7 @@ class User:
 
     def get_raided(self, scheduler):
         for nazwa_firmy in self.akcje.keys():
-            if False == self.sprzedaj_akcje(scheduler.akcje[nazwa_firmy], (self.akcje[nazwa_firmy]+1)//2):
+            if False == self.sprzedaj_akcje(scheduler.akcje[nazwa_firmy], (self.akcje[nazwa_firmy]+1)//2, zarabiaj=False):
                 return False
         self.bilans /= 2
         return True
@@ -100,13 +101,14 @@ class User:
 
         self.bilans -= budzet
         #zrob rng, trudno sie raiduje bogacza
-        failure = 1/exp(budzet/(max(enemy.get_networth(), 0.01)))
+        #failure = 1/exp(budzet/(max(enemy.get_networth(), 0.01)))
+        failure = 0.5
         if uniform(0, 1) < failure:
             print("masz niefarta : ( raid sie nie udal")
             return (False)
 
         for nazwa_firmy in enemy.akcje.keys(): #sprzedaj polowe akcji xd
-            if (False) == enemy.sprzedaj_akcje(nazwa_firmy, (enemy.akcje[nazwa_firmy]+1)//2): #zaokraglane w gore
+            if (False) == enemy.sprzedaj_akcje(nazwa_firmy, (enemy.akcje[nazwa_firmy]+1)//2, zarabiaj=False): #zaokraglane w gore
                 return (False)
         enemy.bilans //= 2 #zrzuc polowe kasy w nicosc
         return (True)
