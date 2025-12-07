@@ -59,6 +59,11 @@ const sharesData = document.getElementById("shares-data");
 
 const moneyText = document.getElementById("money");
 
+const raidPanel = document.getElementById("raid-panel");
+const raidWheel = document.getElementById("raid-wheel");
+
+const walletText = document.getElementById("wallet-text");
+
 const graphPaddingH = 8;
 const graphPaddingW = 0;
 const graphMultiply = 5;
@@ -80,6 +85,12 @@ let id = -1;
 let currentSharePrice = 0;
 let currentRemainingShares = 0;
 let mySharesAmount = 0;
+let raidingPlayer = "";
+let spinRotation = 0;
+let spinTime = 0;
+let spinTimer = 0;
+let spinMultiplier = 1;
+let spinning = false;
 
 // console.log(document.cookie);
 // if (document.cookie != "")
@@ -90,7 +101,12 @@ let mySharesAmount = 0;
 refreshCities();
 // refreshCanvas();
 
+
 setInterval(() => {
+    loop();
+}, 500);
+
+function loop() {
     fetch(new URL("http://localhost:8000/timings")).then(res => res.json())
         .then(res => {
             timer.innerHTML = Math.round(res);
@@ -117,8 +133,20 @@ setInterval(() => {
             .then(res => {
                 moneyText.innerHTML = r2(res) + " zł";
             });
+
+        fetch(new URL("http://localhost:8000/acc_value"),
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    "token": id
+                })
+
+            }).then(res => res.json())
+            .then(res => {
+                walletText.innerHTML = "Wartość portfela wynosi: " + r2(res) + " zł";
+            });
     }
-}, 500);
+}
 
 function refreshCities() {
     citiesParent.innerHTML = "";
@@ -251,8 +279,8 @@ function socialOpen() {
                         res[i] +
                         `</td>
                     <td>?</td>
-                    <td><button onclick='raid("` + res[i] + `")'>Sabotaż</button></td>
-                    <td><button onclick=''>Sprawdź</button></td></tr>`;
+                    <td><button class='social-button' onclick='raid("` + res[i] + `")'>Sabotaż</button></td>
+                    <td><button class='social-button' onclick=''>Sprawdź</button></td></tr>`;
                 }
             }
         });
@@ -323,6 +351,7 @@ function onLogin(idValue) {
             inGame = true;
             refreshCities();
             refreshCanvas();
+            loop();
         });
 }
 
@@ -455,15 +484,20 @@ function confirmTransaction() {
 }
 
 function raid(raided) {
+    raidingPlayer = raided;
+    raidPanel.style.display = "unset";
+    raidWheel.style.transform = "rotate(0deg)";
+}
+
+function sendRaid(success) {
     fetch(new URL("http://localhost:8000/raid"),
         {
             method: "POST",
-            body: JSON.stringify({ "cookie": id, "raided": raided, "success": Math.random() < 0.75 })
+            body: JSON.stringify({ "cookie": id, "raided": raidingPlayer, "success": success })
         }).then(res => res.json())
         .then(res => {
             alert(res ? "Sabotaż przeszedł pomyślnie" : "Sabotaż się nie powiódł");
         });
-
 }
 
 function addMoney() {
@@ -475,6 +509,39 @@ function addMoney() {
         .then(res => {
             console.log(res);
         });
+}
+
+function spinRaidWheel() {
+    if (spinning)
+        return;
+    spinTime = Math.random() * 1080 + 1080;
+    spinTimer = 0;
+    spinMultiplier = Math.random() * 0.5 + 0.5;
+    spinning = true;
+    spinLoop();
+}
+
+function spinLoop() {
+    spinTimer += 0.01 * spinMultiplier;
+    raidWheel.style.transform = "rotate(" + lerp(0, spinTime, easeOutCubic(spinTimer)) + "deg)";
+    if (spinTimer < 1) {
+        setTimeout(() => {
+            spinLoop();
+        }, 20);
+    }
+    else {
+        setTimeout(() => {
+            let sc = spinTime % 360;
+            let res = !(sc < 17 || sc > 347 || (sc > 168 && sc < 196));
+            sendRaid(res);
+            raidClose();
+            spinning = false;
+        }, 500);
+    }
+}
+
+function raidClose() {
+    raidPanel.style.display = "none";
 }
 
 $("#transaction-panel").click(function (e) {
@@ -490,6 +557,11 @@ $("#news-panel").click(function (e) {
 $("#social-panel").click(function (e) {
     if (e.target !== this) return;
     socialClose();
+});
+
+$("#raid-panel").click(function (e) {
+    if (e.target !== this) return;
+    raidClose();
 });
 
 // deleteAllCookies();
@@ -557,4 +629,8 @@ function deleteAllCookies() {
 
 function r2(a) {
     return Math.round(a * 100) / 100;
+}
+
+function easeOutCubic(x) {
+    return 1 - Math.pow(1 - x, 3);
 }

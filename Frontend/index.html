@@ -36,8 +36,10 @@
         </div>
 
         <div id="top">
-            <div style="display: inline-block; vertical-align: middle;"><h1 id="money">200 zł</h1><button id="add-button" onclick="addMoney()">+</button></div>
-            <h3>Wartość portfela: 10 zł</h3>
+            <div style="display: inline-block; vertical-align: middle;">
+                <h1 id="money">200 zł</h1><button id="add-button" onclick="addMoney()">+</button>
+            </div>
+            <h3 id="wallet-text">Wartość portfela: 10 zł</h3>
             <div id="top-background"></div>
         </div>
 
@@ -82,11 +84,17 @@
                     <td>
                         <div id="business-list">
                             <!-- <button id="collapse-graph-button" onclick="switchGraph()" style="transform: scaleX(-1);">←</button><br> -->
-                            <button id="ParuwexButton" onclick="businessClick('Paruwex', true)"><img src="sprites/ParuwexIcon.png" alt="paruwex"></button><br>
-                            <button id="BydgoszczEnterprisesButton" onclick="businessClick('BydgoszczEnterprises', true)"><img src="sprites/BydgoszczEnterprisesIcon.png" alt="bydgoszczenterprises"></button><br>
-                            <button id="NanoHardButton" onclick="businessClick('NanoHard', true)"><img src="sprites/NanoHardIcon.png" alt="nanohard"></button><br>
-                            <button id="RopuchaButton" onclick="businessClick('Ropucha', true)"><img src="sprites/RopuchaIcon.png" alt="ropucha"></button><br>
-                            <button id="DVDProjectBlueButton" onclick="businessClick('DVDProjectBlue', true)"><img src="sprites/DVDProjectBlueIcon.png" alt="dvdprojectblue"></button><br>
+                            <button id="ParuwexButton" onclick="businessClick('Paruwex', true)"><img
+                                    src="sprites/ParuwexIcon.png" alt="paruwex"></button><br>
+                            <button id="BydgoszczEnterprisesButton"
+                                onclick="businessClick('BydgoszczEnterprises', true)"><img
+                                    src="sprites/BydgoszczEnterprisesIcon.png" alt="bydgoszczenterprises"></button><br>
+                            <button id="NanoHardButton" onclick="businessClick('NanoHard', true)"><img
+                                    src="sprites/NanoHardIcon.png" alt="nanohard"></button><br>
+                            <button id="RopuchaButton" onclick="businessClick('Ropucha', true)"><img
+                                    src="sprites/RopuchaIcon.png" alt="ropucha"></button><br>
+                            <button id="DVDProjectBlueButton" onclick="businessClick('DVDProjectBlue', true)"><img
+                                    src="sprites/DVDProjectBlueIcon.png" alt="dvdprojectblue"></button><br>
                             <button>6</button><br>
                             <button>7</button>
                         </div>
@@ -145,8 +153,60 @@
             <div class="window" id="transaction-window">
                 <h1 id="transaction-header">KUP</h1>
                 <h3 id="transaction-summary">5 akcji firmy Ropucha za 100 zł</h3>
-                <input type="range" id="transaction-slider" class="slider" step="1" min="0" onchange="updateTransactionSummary()" onmousemove="updateTransactionSummary()"><br>
+                <input type="range" id="transaction-slider" class="slider" step="1" min="0"
+                    onchange="updateTransactionSummary()" onmousemove="updateTransactionSummary()"><br>
                 <button id="transaction-button" onclick="confirmTransaction()">Zatwierdź</button>
+            </div>
+        </div>
+
+        <div class="window-panel" id="raid-panel">
+            <div id="raid-window" onclick="spinRaidWheel()">
+                <h1>Koło sabotażu</h1>
+                <h3>Traf w czerwone pole</h3>
+
+                <svg viewBox="0 0 132.43114 147.19806" version="1.1" id="raid-needle"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                    <defs id="defs1" />
+                    <g id="layer1" transform="translate(-33.784438,-3.0824369)">
+                        <path
+                            style="fill:#d2d2d2;fill-opacity:1;stroke:#140002;stroke-width:8.5;stroke-linecap:round;stroke-linejoin:miter"
+                            d="M 126.9457,33.297047 100,133.85976 73.054299,33.297047 Z" id="path1" />
+                        <path
+                            style="fill:#ff1532;fill-opacity:1;stroke:#140002;stroke-width:8.5;stroke-linecap:round;stroke-linejoin:miter"
+                            d="M 92.646422,45.153391 100,72.597308 107.35357,45.153391 Z" id="path4" />
+                        <path
+                            style="fill:#ff1532;fill-opacity:1;stroke:#140002;stroke-width:8.5;stroke-linecap:round;stroke-linejoin:miter"
+                            d="M 155.20479,22.274439 100,7.4823605 44.795212,22.274439 100,54.146939 Z" id="path3" />
+                    </g>
+                </svg>
+
+                <svg viewBox="0 0 200 200" version="1.1" id="raid-wheel" style="display: unset;"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                    <defs id="defs1" />
+                    <g id="layer1">
+                        <path
+                            style="fill:#140002;fill-opacity:1;stroke-width:7.99956;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+                            id="path4"
+                            d="m 184.93364,77.2421 0,45.5158 -22.7579,39.41784 -39.41784,22.7579 -45.515799,0 -39.417839,-22.7579 -22.757899,-39.41784 0,-45.515799 22.757899,-39.417839 39.417838,-22.757899 45.5158,0 39.41784,22.757899 z"
+                            transform="matrix(1.0975601,0,0,1.0975601,-9.7560134,-9.7560134)" />
+                        <path style="fill:#ff1532;stroke-width:7.99999;stroke-linecap:round;stroke-linejoin:round"
+                            id="path1"
+                            d="m 184.93364,77.2421 0,45.5158 -22.7579,39.41784 -39.41784,22.7579 -45.515799,0 -39.417839,-22.7579 -22.757899,-39.41784 0,-45.515799 22.757899,-39.417839 39.417838,-22.757899 45.5158,0 39.41784,22.757899 z" />
+                        <path
+                            style="fill:none;fill-opacity:1;stroke:#140002;stroke-width:16.6697;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                            id="path5"
+                            d="m 184.93364,77.2421 0,45.5158 -22.7579,39.41784 -39.41784,22.7579 -45.515799,0 -39.417839,-22.7579 -22.757899,-39.41784 0,-45.515799 22.757899,-39.417839 39.417838,-22.757899 45.5158,0 39.41784,22.757899 z"
+                            transform="matrix(0.50990672,0,0,0.50990672,49.009328,49.009328)" />
+                        <path
+                            style="fill:#140002;fill-opacity:1;stroke:#140002;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                            d="M 100,100 77.2421,15.066363 h 45.5158 z" id="path2" />
+                        <path
+                            style="fill:#140002;fill-opacity:1;stroke:#140002;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+                            d="m 100,100 22.7579,84.93364 H 77.2421 Z" id="path3" />
+                    </g>
+                </svg>
+                <br>
+                <i>Kliknij w koło</i>
             </div>
         </div>
 
