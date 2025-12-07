@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request, Cookie, Response
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi.middleware.cors import CORSMiddleware
 from math import lgamma
+import threading
 import asyncio
 import random
 import time
@@ -200,12 +201,11 @@ def some_bullshit():
 	global bullshit_news
 	return random.choice(bullshit_news)
 
-@app.on_event("startup")
-async def startup():
-
-	scheduler = AsyncIOScheduler()
-	scheduler.add_job(RunAtIntervals, "interval", seconds=1)  # Adjust interval here
-	scheduler.start()
+def startup():
+	global RUN
+	while RUN:
+		main_scheduler.check_for_update()
+		time.sleep(0.2)
 
 if True:
 
@@ -215,3 +215,6 @@ if True:
 	Users: dict[str, User]      = {} #dict[login, user]
 	Cookies                     = {} #cos
 	RUN                         = True
+
+	t = threading.Thread(target=startup)
+	t.start()
