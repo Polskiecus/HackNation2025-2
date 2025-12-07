@@ -68,8 +68,8 @@ bullshit_news = [
 
 @app.get("/players")
 def Players():
-	global Users
-	return [name for name in Users]
+	global main_users
+	return [name for name in main_users]
 
 def extract_login_from_request(cookie: int):
 	try:
@@ -99,7 +99,7 @@ async def Buy(nazwa: str, ilosc: int) -> bool:
 	ilosc = data["ilosc"]
 	nazwa = data["nazwa"]
 
-	if login not in Users:
+	if login not in main_users:
 		return False
 
 	try:
@@ -118,7 +118,7 @@ async def Sell(request: Request) -> bool:
 	ilosc = data["ilosc"]
 	nazwa = data["nazwa"]
 
-	if login not in Users:
+	if login not in main_users:
 		return False
 
 	try:
@@ -157,14 +157,14 @@ async def Newsy():
 
 @app.post("/log_in")
 async def Login(request: Request):
-	global Cookies, Users
+	global Cookies, main_users
 	data = await request.json()
 
-	if data["login"] not in Users:
+	if data["login"] not in main_users:
 		return "User does not exist!"
 
 	else:
-		if Users[data["login"]]["pwd"] == data["pwd"]:
+		if main_users[data["login"]]["pwd"] == data["pwd"]:
 			num_ = random.randint(0, 2**30)
 			while num_ in Cookies:
 				num_ = random.randint(0, 2**30)
@@ -177,14 +177,14 @@ async def Login(request: Request):
 
 @app.post("/register")
 async def Register(request: Request):
-	global Users
+	global main_users
 	data = await request.json()
 
-	if data["login"] in Users:
+	if data["login"] in main_users:
 		return "User already exists!"
 
 	else:
-		Users[data["login"]] = {"pwd": data["pwd"]}
+		main_users[data["login"]] = {"pwd": data["pwd"]}
 		return "User created!"
 
 @app.post("/cookie-info")
@@ -201,20 +201,18 @@ def some_bullshit():
 	global bullshit_news
 	return random.choice(bullshit_news)
 
-def startup():
-	global RUN
-	while RUN:
-		main_scheduler.check_for_update()
-		time.sleep(0.2)
+#def startup():
+#	global RUN
+#	while RUN:
+#		main_scheduler.check_for_update()
+#		time.sleep(0.2)
 
 if True:
 
 	main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
 	main_scheduler              = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
 
-	Users: dict[str, User]      = {} #dict[login, user]
+	main_users: dict[str, User]      = {} #dict[login, user]
 	Cookies                     = {} #cos
 	RUN                         = True
 
-	t = threading.Thread(target=startup)
-	t.start()
