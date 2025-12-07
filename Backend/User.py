@@ -39,7 +39,7 @@ class User:
             return (False, e)
 
     def kup_akcje(self, akcja: Akcja, ilosc: int) -> (bool):
-        if ilosc > akcja.remaining_shares:
+        if ilosc > akcja.remaining_shares or ilosc <= 0:
             print("za malo akcji")
             return (False)
 
@@ -47,6 +47,8 @@ class User:
             print("zbyt biedny")
             return (False)
 
+        #zwieksz cene akcji
+        akcja.dodaj_czynnik(ilosc/(akcja.remaining_shares+1))
         #stac i da sie kupic
         akcja.remaining_shares -= ilosc
         self.bilans -= akcja.shareprice() * ilosc
@@ -59,12 +61,14 @@ class User:
             print("nie masz zadnej akcji")
             return (False)
 
-        if ilosc > self.akcje[akcja.nazwa]:
+        if ilosc > self.akcje[akcja.nazwa] or ilosc <= 0:
             print("nie ma tylu akcji")
             return (False)
 
         #sprzedaj akcje, bo je masz
         self.akcje[akcja.nazwa] -= ilosc
+        #obniz cene akcji
+        akcja.dodaj_czynnik(1/(ilosc/(akcja.remaining_shares+1)))
         akcja.remaining_shares += ilosc
         self.bilans += akcja.shareprice() * ilosc
         return (True)
