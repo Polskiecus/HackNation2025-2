@@ -139,10 +139,10 @@ body {
     display: inline-flex;
 }
 
-#top button{
+#top button {
     pointer-events: all;
     width: 30px;
-    /* height: 30px; */
+    height: 30px;
     background-color: white;
     border: none;
     border-radius: 8px;
@@ -348,7 +348,7 @@ h2 {
     /* max-height: 400px; */
 }
 
-td button{
+.social-button {
     cursor: pointer;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.15);
@@ -478,4 +478,30 @@ input {
     border-radius: 50%;
     background: #04AA6D;
     cursor: pointer;
+}
+
+#raid-window {
+    text-align: center;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+
+
+#raid-wheel {
+    width: 350px;
+    cursor: pointer;
+    z-index: -11;
+    position: relative;
+}
+
+#raid-needle{
+    width: 150px;
+    position: absolute;
+    left: 29%;
+    top: 4%;
+    z-index: -10;
 }

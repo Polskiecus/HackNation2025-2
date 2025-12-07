@@ -234,8 +234,8 @@ async def AccValue(request: Request):
 
 	out = 0
 	for share in main_scheduler.akcje:
-		if share.nazwa in user.akcje:
-			out += user.akcje[share.nazwa] * share.shareprice()
+		if share in user.akcje:
+			out += user.akcje[share] * main_scheduler.akcje[share].shareprice()
 
 	return out
 
