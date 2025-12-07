@@ -30,6 +30,12 @@ const newsPanel = document.getElementById("news-panel");
 const game = document.getElementById("game");
 const login = document.getElementById("login");
 
+const loginInput = document.getElementById("login-input");
+const passwordInput = document.getElementById("password-input");
+
+const nickname = document.getElementById("nickname");
+const timer = document.getElementById("date");
+
 const graphPaddingH = 8;
 const graphPaddingW = 0;
 const graphMultiply = 5;
@@ -41,8 +47,15 @@ let selectedCity = "";
 let loadedNews = [""];
 let collapsedGraph = false;
 
+
+
 refreshCities();
 refreshCanvas();
+
+setInterval(() => {
+    fetch(new URL("http://localhost:8000/timings")).then(res => res.json())
+    .then(res => { timer.innerHTML = res });
+}, 500);
 
 function refreshCities() {
     citiesParent.innerHTML = "";
@@ -108,7 +121,7 @@ function refreshCanvas() {
     ctx.stroke();
 }
 
-function refreshNewsBar(){
+function refreshNewsBar() {
     for (let i = 0; i < currentNews.length; i++) {
         currentNews[i].innerHTML = loadedNews[0];
     }
@@ -151,69 +164,100 @@ function newsClose() {
 }
 
 function signIn() {
+    fetch(new URL("http://localhost:8000/log_in"),
+        {
+            method: "POST",
+            body: JSON.stringify({
+                "login": loginInput.value,
+                "pwd": passwordInput.value
+            })
+
+        }).then(res => res.json())
+        .then(res => {
+            // console.log(res);
+            let resId = parseInt(res);
+
+            
+            if (!isNaN(resId)) {
+                onLogin(res);
+            }
+            else {
+                alert(res);
+            }
+        });
+}
+
+function onLogin(idValue) {
+    id = idValue;
+    nickname.innerHTML = loginInput.value;
+    document.cookie = idValue;
     login.style.display = "none";
     game.style.display = "unset";
     refreshCities();
     refreshCanvas();
 }
 
-fetch(new URL("http://localhost:8000/register"),
-    {
-        method: "POST",
-        body: JSON.stringify({
-            "login": "User1",
-            "pwd": "123"
-        })
+function signUp() {
+    fetch(new URL("http://localhost:8000/register"),
+        {
+            method: "POST",
+            body: JSON.stringify({
+                "login": loginInput.value,
+                "pwd": passwordInput.value
+            })
 
-    }).then(res => res.json())
-    .then(res => { console.log(res); });
+        }).then(res => res.json())
+        .then(res => { alert(res); });
+}
+
+
 
 id = 0;
 
 // deleteAllCookies();
 
-fetch(new URL("http://localhost:8000/newsy")).then(res => res.json())
-    .then(res => { loadedNews = res; refreshNewsBar(); });
+// fetch(new URL("http://localhost:8000/newsy")).then(res => res.json())
+//     .then(res => { loadedNews = res; refreshNewsBar(); });
 
-fetch(new URL("http://localhost:8000/log_in"),
-    {
-        method: "POST",
-        body: JSON.stringify({
-            "login": "User1",
-            "pwd": "123"
-        })
+// fetch(new URL("http://localhost:8000/log_in"),
+//     {
+//         method: "POST",
+//         body: JSON.stringify({
+//             "login": "User1",
+//             "pwd": "123"
+//         })
 
-    }).then(res => res.json())
-    .then(res => {
-        console.log(res);
-        id = res;
-        // document.cookie = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        // document.cookie = id;
-        console.log(document.cookie);
-        /*
-        fetch(new URL("http://localhost:8000/set-cookie"),
-            {
-                method: "POST",
-                body: JSON.stringify({ "value": 10 })
-            }).then(res => res.json())
-            .then(res => { console.log(res); });
+//     }).then(res => res.json())
+//     .then(res => {
+//         console.log(res);
+//         id = res;
+//         // document.cookie = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
+//         // document.cookie = id;
+//         console.log(document.cookie);
+//         /*
+//         fetch(new URL("http://localhost:8000/set-cookie"),
+//             {
+//                 method: "POST",
+//                 body: JSON.stringify({ "value": 10 })
+//             }).then(res => res.json())
+//             .then(res => { console.log(res); });
 
-        fetch(new URL("http://localhost:8000/cookie-info"),
-            {
-                method: "POST"
-            }).then(res => res.json())
-            .then(res => { console.log(res); });
-        */
+//         fetch(new URL("http://localhost:8000/cookie-info"),
+//             {
+//                 method: "POST"
+//             }).then(res => res.json())
+//             .then(res => { console.log(res); });
+//         */
 
-        fetch(new URL("http://localhost:8000/buy?nazwa=nanohard&ilosc=10"),
-            {
-                method: "GET",
-                // body: JSON.stringify({ "value": 10 })
-            }).then(res => res.json())
-            .then(res => { console.log(res); });
+//         fetch(new URL("http://localhost:8000/buy?nazwa=nanohard&ilosc=10"),
+//             {
+//                 method: "GET",
+//                 // body: JSON.stringify({ "value": 10 })
+//             }).then(res => res.json())
+//             .then(res => { console.log(res); });
 
 
-    });
+//     });
 
 
 

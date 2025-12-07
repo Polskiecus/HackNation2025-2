@@ -16,21 +16,23 @@
 <body>
     <div id="background" onclick="polandClick()"></div>
 
-    <!-- <div id="left-top">
-        
-    </div> -->
 
     <div id="login">
         <div class="window">
             <h1>Logowanie</h1>
-            <input type="text" placeholder="Login"><br>
-            <input type="text" placeholder="Hasło"><br>
+            <input type="text" placeholder="Login" id="login-input"><br>
+            <input type="password" placeholder="Hasło" id="password-input"><br>
             <button onclick="signIn()">Zaloguj się</button>
             <button onclick="signUp()">Rejestracja</button>
         </div>
     </div>
 
     <div id="game" style="display: none;">
+
+        
+        <div id="left-top">
+            <h1 id="nickname"></h1>
+        </div>
 
         <div id="top">
             <h1 id="money">200 zł</h1>
