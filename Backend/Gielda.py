@@ -110,7 +110,7 @@ class Akcja:
 		self.region           = data[4]
 		self.historic_value   = [float(item) for item in historic.split() if item != ""]
 
-	def dodaj_czynnik(czynnik: float):
+	def dodaj_czynnik(self, czynnik: float):
 		self.czynniki.append(czynnik)
 
 	def shareprice(self):
