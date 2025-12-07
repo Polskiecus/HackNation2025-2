@@ -198,6 +198,7 @@ h2 {
 }
 
 #info-window {
+    z-index: 10;
     display: none;
     right: 0;
     top: 50%;
@@ -313,6 +314,7 @@ h2 {
 }
 
 .window-panel {
+    z-index: 100;
     display: none;
     position: fixed;
     width: 100%;
@@ -352,7 +354,7 @@ h2 {
     border-radius: 16px;
 }
 
-#news-list{
+#news-list {
     width: 400px;
     max-height: 400px;
     overflow: auto;
@@ -396,7 +398,7 @@ input {
     margin-left: 0;
 }
 
-#business-region-item{
+#business-region-item {
     width: 100%;
     display: inline-block;
     margin-top: 8px;
@@ -406,7 +408,8 @@ input {
     color: white;
     cursor: pointer;
 }
-#business-region-item img{
+
+#business-region-item img {
     width: 32px;
     margin: 4px;
 }
@@ -419,7 +422,8 @@ input {
     border-radius: 16px;
 }
 
-#transaction-window button{
+#transaction-window button {
+    width: 100%;
     padding: 16px;
     background-color: rgba(255, 255, 255, 0.05);
     border: none;
@@ -429,27 +433,28 @@ input {
 }
 
 .slider {
+    margin: 16px;
     -webkit-appearance: none;
-  width: 90%;
-  height: 2px;
-  border-radius: 8px;  
-  background: #0000002a;
-  outline: none;
+    width: 80%;
+    height: 2px;
+    border-radius: 8px;
+    background: #0000002a;
+    outline: none;
 }
 
 .slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%; 
-  background: #ffffff;
-  cursor: pointer;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #04AA6D;
-  cursor: pointer;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #04AA6D;
+    cursor: pointer;
 }

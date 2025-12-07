@@ -82,11 +82,11 @@
                     <td>
                         <div id="business-list">
                             <!-- <button id="collapse-graph-button" onclick="switchGraph()" style="transform: scaleX(-1);">←</button><br> -->
-                            <button id="ParuwexButton" onclick="businessClick('Paruwex')"><img src="sprites/ParuwexIcon.png" alt="paruwex"></button><br>
-                            <button id="BydgoszczEnterprisesButton" onclick="businessClick('BydgoszczEnterprises')"><img src="sprites/BydgoszczEnterprisesIcon.png" alt="bydgoszczenterprises"></button><br>
-                            <button id="NanoHardButton" onclick="businessClick('NanoHard')"><img src="sprites/NanoHardIcon.png" alt="nanohard"></button><br>
-                            <button id="RopuchaButton" onclick="businessClick('Ropucha')"><img src="sprites/RopuchaIcon.png" alt="ropucha"></button><br>
-                            <button id="DVDProjectBlueButton" onclick="businessClick('DVDProjectBlue')"><img src="sprites/DVDProjectBlueIcon.png" alt="dvdprojectblue"></button><br>
+                            <button id="ParuwexButton" onclick="businessClick('Paruwex', true)"><img src="sprites/ParuwexIcon.png" alt="paruwex"></button><br>
+                            <button id="BydgoszczEnterprisesButton" onclick="businessClick('BydgoszczEnterprises', true)"><img src="sprites/BydgoszczEnterprisesIcon.png" alt="bydgoszczenterprises"></button><br>
+                            <button id="NanoHardButton" onclick="businessClick('NanoHard', true)"><img src="sprites/NanoHardIcon.png" alt="nanohard"></button><br>
+                            <button id="RopuchaButton" onclick="businessClick('Ropucha', true)"><img src="sprites/RopuchaIcon.png" alt="ropucha"></button><br>
+                            <button id="DVDProjectBlueButton" onclick="businessClick('DVDProjectBlue', true)"><img src="sprites/DVDProjectBlueIcon.png" alt="dvdprojectblue"></button><br>
                             <button>6</button><br>
                             <button>7</button>
                         </div>
@@ -94,6 +94,7 @@
                     <td id="stock-section">
                         <h1 id="business-name">Ropucha</h1>
                         <canvas id="stock-graph"></canvas><br>
+                        <h3 id="shares-data">Twoja ilość akcji: 0 Ilość pozostałych akcji: 0 Cena za akcję: 0</h3>
                         <button id="buy" onclick="openTransaction('buy')">KUP</button>
                         <button id="sell" onclick="openTransaction('sell')">SPRZEDAJ</button>
                     </td>
@@ -114,7 +115,7 @@
             <button><img src="sprites/SocialIcon.png" alt="nanohard" onclick="socialOpen()"></button>
         </div>
 
-        <div class="window-panel" id="social-panel" onclick="socialClose()">
+        <div class="window-panel" id="social-panel">
             <div class="window" id="social-window">
                 <h1>Gracze</h1>
                 <div id="players-scroll">
@@ -131,7 +132,7 @@
             </div>
         </div>
 
-        <div class="window-panel" id="news-panel" onclick="newsClose()">
+        <div class="window-panel" id="news-panel">
             <div class="window" id="news-window">
                 <h1>News</h1>
                 <div id="news-list">
@@ -144,7 +145,7 @@
             <div class="window" id="transaction-window">
                 <h1 id="transaction-header">KUP</h1>
                 <h3 id="transaction-summary">5 akcji firmy Ropucha za 100 zł</h3>
-                <input type="range" id="transaction-slider" class="slider" step="1" min="0" onchange="updateTransactionSummary()"><br>
+                <input type="range" id="transaction-slider" class="slider" step="1" min="0" onchange="updateTransactionSummary()" onmousemove="updateTransactionSummary()"><br>
                 <button id="transaction-button" onclick="confirmTransaction()">Zatwierdź</button>
             </div>
         </div>

@@ -55,6 +55,8 @@ const transactionHeader = document.getElementById("transaction-header");
 const transactionSlider = document.getElementById("transaction-slider");
 const transactionButton = document.getElementById("transaction-button");
 
+const sharesData = document.getElementById("shares-data");
+
 const moneyText = document.getElementById("money");
 
 const graphPaddingH = 8;
@@ -70,13 +72,14 @@ let selectedCity = "";
 let loadedNews = [""];
 let collapsedGraph = true;
 let selectedBusiness = "";
-let selectedTransaction = "";
+let transactionType = "";
 let loggedUser = "";
 let mouseOnPanel = false;
 let inGame = false;
 let id = -1;
-let currentSharePrice = -1;
-let currentRemainingShares = -1;
+let currentSharePrice = 0;
+let currentRemainingShares = 0;
+let mySharesAmount = 0;
 
 // console.log(document.cookie);
 // if (document.cookie != "")
@@ -94,6 +97,8 @@ setInterval(() => {
             if (lastServerTime < res && inGame) {
                 let audio = new Audio("audio/bell-sound.wav");
                 audio.play();
+
+                businessClick(selectedBusiness, false);
             }
             lastServerTime = res;
         });
@@ -110,7 +115,7 @@ setInterval(() => {
 
             }).then(res => res.json())
             .then(res => {
-                moneyText.innerHTML = res + " zł";
+                moneyText.innerHTML = r2(res) + " zł";
             });
     }
 }, 500);
@@ -205,7 +210,7 @@ function clickCity(name, img) {
             businessRegionList.innerHTML = "";
             for (let i = 0; i < res.length; i++) {
                 businessRegionList.innerHTML += `
-                <button id="business-region-item" onclick="businessClick('` + res[i] + `')">
+                <button id="business-region-item" onclick="businessClick('` + res[i] + `', true)">
                 <table>
                 <tr>
                 <td>
@@ -254,8 +259,7 @@ function socialOpen() {
 }
 
 function socialClose() {
-    if (mouseOnPanel)
-        socialPanel.style.display = "none";
+    socialPanel.style.display = "none";
 }
 
 function switchGraph() {
@@ -273,8 +277,7 @@ function newsOpen() {
 }
 
 function newsClose() {
-    if (mouseOnPanel)
-        newsPanel.style.display = "none";
+    newsPanel.style.display = "none";
 }
 
 function signIn() {
@@ -312,7 +315,7 @@ function onLogin(idValue) {
         .then(res => {
             console.log(res);
 
-            nickname.innerHTML = res;
+            nickname.innerHTML = "Witaj, " + res;
             document.cookie = idValue;
             loggedUser = res;
             login.style.display = "none";
@@ -337,7 +340,7 @@ function signUp() {
         .then(res => { alert(res); });
 }
 
-function businessClick(name) {
+function businessClick(name, withSwitch) {
     fetch(new URL("http://localhost:8000/firminfo"),
         {
             method: "POST",
@@ -347,18 +350,36 @@ function businessClick(name) {
 
         }).then(res => res.json())
         .then(res => {
-            if (selectedBusiness != "")
+            if (selectedBusiness != "" && withSwitch)
                 document.getElementById(selectedBusiness + "Button").classList.remove("selected-button");
 
             prices = res.values;
             let lastBusiness = selectedBusiness;
             selectedBusiness = name;
             businessName.innerHTML = name;
-            if (collapsedGraph || lastBusiness != selectedBusiness)
+
+            currentSharePrice = r2(res.value / res.shares_total);
+            sharesData.innerHTML = "Ilość pozostałych akcji: " + res.shares_available + "<br>Cena za akcję: " + currentSharePrice + " zł";
+
+            fetch(new URL("http://localhost:8000/shares_amount"),
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        "token": id,
+                        "akcja": selectedBusiness
+                    })
+
+                }).then(res2 => res2.json())
+                .then(res2 => {
+                    sharesData.innerHTML += "<br>Ilość Twoich akcji: " + res2;
+                    mySharesAmount = res2;
+                });
+
+            if (withSwitch && (collapsedGraph || lastBusiness != selectedBusiness))
                 document.getElementById(selectedBusiness + "Button").classList.add("selected-button");
             console.log(document.getElementById(selectedBusiness + "Button"));
             refreshCanvas();
-            if (collapsedGraph || lastBusiness == selectedBusiness)
+            if (withSwitch && (collapsedGraph || lastBusiness == selectedBusiness))
                 switchGraph();
         });
 }
@@ -380,7 +401,7 @@ function openTransaction(type) {
 
             }).then(res => res.json())
             .then(res => {
-                currentSharePrice = res.value / res.shares_total;
+                currentSharePrice = r2(res.value / res.shares_total);
                 currentRemainingShares = res.shares_available;
                 fetch(new URL("http://localhost:8000/money"),
                     {
@@ -397,41 +418,56 @@ function openTransaction(type) {
                     });
             });
     }
-    else
+    else{
         transactionHeader.innerHTML = "SPRZEDAJ";
-    selectedTransaction = type;
+        transactionSlider.max = mySharesAmount;
+    }
+    transactionType = type;
 
 
-
+    transactionSlider.value = 0;
     updateTransactionSummary();
 }
 
 function updateTransactionSummary() {
-    transactionSummary.innerHTML = transactionSlider.value + " akcji firmy " + selectedBusiness + " za kwotę " + Math.round(currentSharePrice * transactionSlider.value * 100) / 100 + " zł";
+    transactionSummary.innerHTML = transactionSlider.value + " akcji firmy " + selectedBusiness + " za kwotę " + r2(currentSharePrice * transactionSlider.value) + " zł";
 }
 
 function confirmTransaction() {
     console.log(selectedBusiness + " " + transactionSlider.value + " " + id);
-    fetch(new URL("http://localhost:8000/buy"),
-    {
-        method: "POST",
-        body: JSON.stringify({
-            "cookie": id,
-            "ilosc": transactionSlider.value,
-            "nazwa": selectedBusiness
-        })
+    fetch(new URL("http://localhost:8000/" + transactionType),
+        {
+            method: "POST",
+            body: JSON.stringify({
+                "cookie": id,
+                "ilosc": transactionSlider.value,
+                "nazwa": selectedBusiness
+            })
 
-    }).then(res => res.json())
-    .then(res => {
-        console.log(res);
-        
-    });
+        }).then(res => res.json())
+        .then(res => {
+            console.log(res);
+            if (res){
+                transactionClose();
+                businessClick(selectedBusiness, false);
+            }
+        });
 }
 
 
 $("#transaction-panel").click(function (e) {
     if (e.target !== this) return;
     transactionClose();
+});
+
+$("#news-panel").click(function (e) {
+    if (e.target !== this) return;
+    newsClose();
+});
+
+$("#social-panel").click(function (e) {
+    if (e.target !== this) return;
+    socialClose();
 });
 
 // deleteAllCookies();
@@ -494,4 +530,9 @@ function deleteAllCookies() {
         const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
         document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
     });
+}
+
+
+function r2(a){
+    return Math.round(a * 100) / 100;
 }
