@@ -137,8 +137,7 @@ class Scheduler:
 			self.ostatni_news = wylosowany_news
 
 			for firma in wylosowany_news.efekty:
-				for item in wylosowany_news:
-					self.push_changes(item, wylosowany_news[item])
+				self.push_changes(firma, wylosowany_news[firma])
 		else:
 			self.ostatni_news = wylosowany_news
 
