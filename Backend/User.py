@@ -29,14 +29,13 @@ class User:
     def get_bilans(self) -> (bool, float): #zwraca ile gracz ma kasy
         return (True, self.bilans)
 
-    def get_networth(self) -> (bool, float): #oblicza ile "kasy" ma gracz
-        try:
-            suma_kasy = self.bilans
-            for nazwa_firmy in self.akcje.keys():
-                suma_kasy += Gielda.Scheduler.akcje[nazwa_firmy] * self.akcje[nazwa_firmy]
-            return (True, suma_kasy)
-        except Exception as e:
-            return (False, e)
+    def get_networth(self, scheduler) -> (bool, float): #oblicza ile "kasy" ma gracz
+
+        suma_kasy = self.bilans
+        for nazwa_firmy in self.akcje:
+            suma_kasy += scheduler.akcje[nazwa_firmy].shareprice() * self.akcje[nazwa_firmy]
+        return (True, suma_kasy)
+
 
     def kup_akcje(self, akcja: Akcja, ilosc: int) -> (bool):
         if ilosc > akcja.remaining_shares or ilosc <= 0:

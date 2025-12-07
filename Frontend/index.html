@@ -95,8 +95,10 @@
                                     src="sprites/RopuchaIcon.png" alt="ropucha"></button><br>
                             <button id="DVDProjectBlueButton" onclick="businessClick('DVDProjectBlue', true)"><img
                                     src="sprites/DVDProjectBlueIcon.png" alt="dvdprojectblue"></button><br>
-                            <button>6</button><br>
-                            <button>7</button>
+                            <button id="Dino-zaurButton" onclick="businessClick('Dino-zaur', true)"><img
+                                    src="sprites/Dino-zaurIcon.png" alt="dino-zaur"></button><br>
+                            <button id="DzidaButton" onclick="businessClick('Dzida', true)"><img
+                                    src="sprites/DzidaIcon.png" alt="dzida"></button>
                         </div>
                     </td>
                     <td id="stock-section">
@@ -164,8 +166,8 @@
                 <h1>Koło sabotażu</h1>
                 <h3>Traf w czerwone pole</h3>
 
-                <svg viewBox="0 0 132.43114 147.19806" version="1.1" id="raid-needle"
-                    xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 132.43114 147.19806" version="1.1" id="raid-needle" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:svg="http://www.w3.org/2000/svg">
                     <defs id="defs1" />
                     <g id="layer1" transform="translate(-33.784438,-3.0824369)">
                         <path
@@ -181,7 +183,7 @@
                 </svg>
 
                 <svg viewBox="0 0 200 200" version="1.1" id="raid-wheel" style="display: unset;"
-                     xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
                     <defs id="defs1" />
                     <g id="layer1">
                         <path
@@ -207,6 +209,14 @@
                 </svg>
                 <br>
                 <i>Kliknij w koło</i>
+            </div>
+        </div>
+
+
+        <div class="window-panel" id="peep-panel">
+            <div class="window" id="peep-window">
+                <h1 id="peep-header">Gracz1</h1>
+                <h3 id="peep-estimated">Szacowana wartość majątku: ~10000 zł</h3>
             </div>
         </div>
 

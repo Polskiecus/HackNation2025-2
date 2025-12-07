@@ -16,7 +16,9 @@ const businessColors = {
     "BydgoszczEnterprises": "#FFFFFF",
     "NanoHard": "#ff1532",
     "Ropucha": "#0b9e3c",
-    "DVDProjectBlue": "#2944f0"
+    "DVDProjectBlue": "#2944f0",
+    "Dino-zaur": "#27f418",
+    "Dzida": "#bc4414",
 };
 
 let prices = [-10, 20, 15, 80, 10, 0, 200, 8];
@@ -58,11 +60,15 @@ const transactionButton = document.getElementById("transaction-button");
 const sharesData = document.getElementById("shares-data");
 
 const moneyText = document.getElementById("money");
+const walletText = document.getElementById("wallet-text");
 
 const raidPanel = document.getElementById("raid-panel");
 const raidWheel = document.getElementById("raid-wheel");
 
-const walletText = document.getElementById("wallet-text");
+
+const peepPanel = document.getElementById("peep-panel");
+const peepHeader = document.getElementById("peep-header");
+const peepEstimated = document.getElementById("peep-estimated");
 
 const graphPaddingH = 8;
 const graphPaddingW = 0;
@@ -91,6 +97,7 @@ let spinTime = 0;
 let spinTimer = 0;
 let spinMultiplier = 1;
 let spinning = false;
+let peepTarget = "";
 
 // console.log(document.cookie);
 // if (document.cookie != "")
@@ -280,7 +287,7 @@ function socialOpen() {
                         `</td>
                     <td>?</td>
                     <td><button class='social-button' onclick='raid("` + res[i] + `")'>Sabotaż</button></td>
-                    <td><button class='social-button' onclick=''>Sprawdź</button></td></tr>`;
+                    <td><button class='social-button' onclick='check("` + res[i] + `")'>Sprawdź</button></td></tr>`;
                 }
             }
         });
@@ -544,6 +551,26 @@ function raidClose() {
     raidPanel.style.display = "none";
 }
 
+function check(target) {
+    peepTarget = target;
+    let s = (Math.random() < 0.4);
+    // console.log(s);
+    fetch(new URL("http://localhost:8000/peep"),
+        {
+            method: "POST",
+            body: JSON.stringify({ "cookie": id, "woman": target, "success": s})
+        }).then(res => res.json())
+        .then(res => {
+            peepHeader.innerHTML = peepTarget;
+            peepEstimated.innerHTML = res <= 10 ? "Niepowodzenie" : "Szacowana wartość majątku: ~" + r2(res) + " zł";
+            peepPanel.style.display = "unset";
+        });
+}
+
+function peepClose() {
+    peepPanel.style.display = "none";
+}
+
 $("#transaction-panel").click(function (e) {
     if (e.target !== this) return;
     transactionClose();
@@ -562,6 +589,11 @@ $("#social-panel").click(function (e) {
 $("#raid-panel").click(function (e) {
     if (e.target !== this) return;
     raidClose();
+});
+
+$("#peep-panel").click(function (e) {
+    if (e.target !== this) return;
+    peepClose();
 });
 
 // deleteAllCookies();

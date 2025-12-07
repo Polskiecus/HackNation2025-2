@@ -489,8 +489,6 @@ input {
     cursor: pointer;
 }
 
-
-
 #raid-wheel {
     width: 350px;
     cursor: pointer;
@@ -504,4 +502,13 @@ input {
     left: 29%;
     top: 4%;
     z-index: -10;
+}
+
+#peep-window {
+    text-align: center;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 16px;
 }
