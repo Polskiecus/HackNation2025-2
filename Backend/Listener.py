@@ -89,7 +89,6 @@ async def RunAtIntervals():
 @app.get("/timings")
 async def Timings(): #za ile sekund aktualizuje sie rynek
 	global main_scheduler
-	main_scheduler.check_for_update()
 	return main_scheduler.time_to_pass + main_scheduler.last_checked - time.time()
 
 @app.get("/buy")
@@ -213,7 +212,6 @@ if True:
 	main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
 	main_scheduler              = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
 
-	main_users: dict[str, User]      = {} #dict[login, user]
 	Cookies                     = {} #cos
 	RUN                         = True
 
