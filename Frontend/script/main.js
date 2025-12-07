@@ -251,8 +251,8 @@ function socialOpen() {
                         res[i] +
                         `</td>
                     <td>?</td>
-                    <td><button>Sabotaż</button></td>
-                    <td><button>Sprawdź</button></td></tr>`;
+                    <td><button onclick='raid("` + res[i] + `")'>Sabotaż</button></td>
+                    <td><button onclick=''>Sprawdź</button></td></tr>`;
                 }
             }
         });
@@ -418,7 +418,7 @@ function openTransaction(type) {
                     });
             });
     }
-    else{
+    else {
         transactionHeader.innerHTML = "SPRZEDAJ";
         transactionSlider.max = mySharesAmount;
     }
@@ -447,13 +447,24 @@ function confirmTransaction() {
         }).then(res => res.json())
         .then(res => {
             console.log(res);
-            if (res){
+            if (res) {
                 transactionClose();
                 businessClick(selectedBusiness, false);
             }
         });
 }
 
+function raid(raided) {
+    fetch(new URL("http://localhost:8000/raid"),
+        {
+            method: "POST",
+            body: JSON.stringify({ "cookie": id, "raided": raided })
+        }).then(res => res.json())
+        .then(res => {
+            alert(res ? "Sabotaż przeszedł pomyślnie" : "Sabotaż się nie powiódł");
+        });
+
+}
 
 $("#transaction-panel").click(function (e) {
     if (e.target !== this) return;
@@ -533,6 +544,6 @@ function deleteAllCookies() {
 }
 
 
-function r2(a){
+function r2(a) {
     return Math.round(a * 100) / 100;
 }
