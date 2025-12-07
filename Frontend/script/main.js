@@ -27,6 +27,9 @@ const collapseGraphButton = document.getElementById("collapse-graph-button");
 const socialPanel = document.getElementById("social-panel");
 const newsPanel = document.getElementById("news-panel");
 
+const game = document.getElementById("game");
+const login = document.getElementById("login");
+
 const graphPaddingH = 8;
 const graphPaddingW = 0;
 const graphMultiply = 5;
@@ -145,6 +148,13 @@ function newsOpen() {
 
 function newsClose() {
     newsPanel.style.display = "none";
+}
+
+function signIn() {
+    login.style.display = "none";
+    game.style.display = "unset";
+    refreshCities();
+    refreshCanvas();
 }
 
 fetch(new URL("http://localhost:8000/register"),

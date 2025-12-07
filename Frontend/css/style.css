@@ -334,3 +334,41 @@ h2{
     transform: translate(-50%, -50%);
     border-radius: 16px;
 }
+
+#login .window{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+}
+
+input{
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 8px;
+    border-radius: 32px;
+    margin: 8px;
+    font-size: 1.2em;
+    color: white;
+}
+
+#login button{
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 8px;
+    border-radius: 16px;
+    margin: 8px;
+    font-size: 1.2em;
+    color: white;
+    cursor: pointer;
+}
+
+#login button:first-child{
+    margin-right: 0;
+    
+}
+
+#login button:last-child{
+    margin-left: 0;
+}
