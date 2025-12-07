@@ -281,7 +281,9 @@ async def NBP(request: Request):
 	global Coookies, main_users
 	data = await request.json()
 	user = main_users[Cookies[data["token"]]]
-	user.bilans += 50
+	money = data["money"]
+
+	user.bilans += money
 
 @app.get("/news-full")
 async def news2():
