@@ -91,7 +91,7 @@ class Akcja:
 		if (len(self.historic_value) > 10):
 			self.historic_value = self.historic_value[1:]
 
-		for czynnik in czynniki:
+		for czynnik in self.czynniki:
 			self.wartosc *= czynnik
 
 		self.czynniki = []
