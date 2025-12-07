@@ -215,13 +215,13 @@ def some_bullshit():
 
 @app.post("/raid")
 async def Raid(request: Request) -> bool:
-	global Cookies, main_users
+	global Cookies, main_users, main_scheduler
 	data = await request.json()
 	login = extract_login_from_request(data["cookie"])
 	if data["success"] == False:
-		return main_users[login].get_raided()
+		return main_users[login].get_raided(main_scheduler)
 	who_got_raided = data["raided"]
-	did_it = main_users[who_got_raided].get_raided()
+	did_it = main_users[who_got_raided].get_raided(main_scheduler)
 	if did_it:
 		main_users[login].bilans += 69 #nice
 	return did_it

@@ -458,12 +458,23 @@ function raid(raided) {
     fetch(new URL("http://localhost:8000/raid"),
         {
             method: "POST",
-            body: JSON.stringify({ "cookie": id, "raided": raided })
+            body: JSON.stringify({ "cookie": id, "raided": raided, "success": Math.random() < 0.75 })
         }).then(res => res.json())
         .then(res => {
             alert(res ? "Sabotaż przeszedł pomyślnie" : "Sabotaż się nie powiódł");
         });
 
+}
+
+function addMoney() {
+    fetch(new URL("http://localhost:8000/NBP"),
+        {
+            method: "POST",
+            body: JSON.stringify({ "token": id, "money": 1000 })
+        }).then(res => res.json())
+        .then(res => {
+            console.log(res);
+        });
 }
 
 $("#transaction-panel").click(function (e) {

@@ -6,7 +6,7 @@
 		"password" : "alamakota"
 	},
 	"zbyszek" : {
-		"akcje" : {"Nanohard": 1000, "Ropucha": 3},
+		"akcje" : {"NanoHard": 1000, "Ropucha": 3},
 		"login" : "zbyszek",
 		"bilans" : 2137,
 		"password" : "niema"

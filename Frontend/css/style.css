@@ -136,6 +136,17 @@ body {
 
 #money {
     font-weight: bolder;
+    display: inline-flex;
+}
+
+#top button{
+    pointer-events: all;
+    width: 30px;
+    /* height: 30px; */
+    background-color: white;
+    border: none;
+    border-radius: 8px;
+    margin-left: 16px;
 }
 
 h1 {
@@ -338,6 +349,7 @@ h2 {
 }
 
 td button{
+    cursor: pointer;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.15);
     border: none;
