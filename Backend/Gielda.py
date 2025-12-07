@@ -153,6 +153,8 @@ class Scheduler:
 		for akcja in self.akcje:
 			self.akcje[akcja].update()
 
+		self.last_checked = time.time()
+
 	def get_a_news(self):
 		return self.ostatni_news
 
