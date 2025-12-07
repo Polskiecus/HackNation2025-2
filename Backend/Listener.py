@@ -214,7 +214,7 @@ def some_bullshit():
 
 @app.post("/raid")
 async def Raid(request: Request) -> bool:
-	global Cookies
+	global Cookies, main_users
 	data = await request.json()
 	login = extract_login_from_request(data["cookie"])
 	if data["success"] == "false":
@@ -227,7 +227,7 @@ async def Raid(request: Request) -> bool:
 
 @app.post("/peep")
 async def Peep(request: Request) -> bool:
-	global Cookies
+	global Cookies, main_users
 	data = await request.json()
 	login = extract_login_from_request(data["cookie"])
 	woman = data["woman"]
@@ -242,6 +242,14 @@ async def Peep(request: Request) -> bool:
 #	while RUN:
 #		main_scheduler.check_for_update()
 #		time.sleep(0.2)
+
+@app.post("/money")
+async def Money(request: Request):
+	global Cookies, main_users
+	data = await request.json()
+	user = main_users[Cookies[data["token"]]]
+
+	return user.bilans
 
 if True:
 
