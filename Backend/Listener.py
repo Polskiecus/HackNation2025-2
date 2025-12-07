@@ -270,6 +270,17 @@ async def NBP(request: Request):
 	user = main_users[Cookies[data["token"]]]
 	user.bilans += 50
 
+@app.get("/news-full")
+async def news2():
+	global main_scheduler, bs
+
+	if main_scheduler.get_a_news():
+		t = main_scheduler.get_a_news()
+		return {"nazwa":t.nazwa,"tresc":t.tresc,"efekty":t.efekty}
+
+	else:
+		return {"nazwa":bs,"tresc":"","efekty":{}}
+
 if True:
 
 	main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
