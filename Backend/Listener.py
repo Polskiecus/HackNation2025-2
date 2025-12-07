@@ -89,6 +89,7 @@ async def RunAtIntervals():
 @app.get("/timings")
 async def Timings(): #za ile sekund aktualizuje sie rynek
 	global main_scheduler
+	main_scheduler.check_for_update()
 	return main_scheduler.time_to_pass + main_scheduler.last_checked - time.time()
 
 @app.get("/buy")
@@ -152,7 +153,7 @@ async def Newsy():
 	global main_scheduler
 	temp = [main_scheduler.get_a_news()]
 	if temp == [None]: temp = [some_bullshit()]
-	elif random.rand() < 0.6: temp = [some_bullshit()]
+	elif random.uniform() < 0.6: temp = [some_bullshit()]
 	return temp
 
 @app.post("/log_in")
@@ -210,7 +211,7 @@ def some_bullshit():
 if True:
 
 	main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
-	main_scheduler              = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
+	main_scheduler              = Scheduler(loadAkcjeFromPath("../Firmy/"), 10) #to trzyma eventy i akcje
 #siema
 	Cookies                     = {} #cos
 	RUN                         = True

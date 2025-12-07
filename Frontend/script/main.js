@@ -48,17 +48,23 @@ let loadedNews = [""];
 let collapsedGraph = false;
 
 // console.log(document.cookie);
-if (document.cookie != "")
-{
-    // onLogin(document.cookie);
-}
+// if (document.cookie != "")
+// {
+//     onLogin(document.cookie);
+// }
 
 refreshCities();
 refreshCanvas();
 
 setInterval(() => {
     fetch(new URL("http://localhost:8000/timings")).then(res => res.json())
-    .then(res => { timer.innerHTML = Math.round(res) });
+    .then(res => { timer.innerHTML = Math.round(res);
+
+        if (Math.round(res) <= 1){
+            fetch(new URL("http://localhost:8000/newsy")).then(res => res.json())
+            .then(res => { loadedNews = res; refreshNewsBar(); });
+        }
+     });
 }, 500);
 
 function refreshCities() {
