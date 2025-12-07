@@ -36,6 +36,8 @@ const passwordInput = document.getElementById("password-input");
 const nickname = document.getElementById("nickname");
 const timer = document.getElementById("date");
 
+const playerList = document.getElementById("player-list");
+
 const graphPaddingH = 8;
 const graphPaddingW = 0;
 const graphMultiply = 5;
@@ -58,13 +60,11 @@ refreshCanvas();
 
 setInterval(() => {
     fetch(new URL("http://localhost:8000/timings")).then(res => res.json())
-    .then(res => { timer.innerHTML = Math.round(res);
-
-        if (Math.round(res) <= 1){
-            fetch(new URL("http://localhost:8000/newsy")).then(res => res.json())
-            .then(res => { loadedNews = res; refreshNewsBar(); });
-        }
-     });
+        .then(res => {
+            timer.innerHTML = Math.round(res);
+        });
+        fetch(new URL("http://localhost:8000/newsy")).then(res => res.json())
+            .then(res => { console.log(res); loadedNews = res; refreshNewsBar(); });
 }, 500);
 
 function refreshCities() {
@@ -153,6 +153,13 @@ function polandClick() {
 
 function socialOpen() {
     socialPanel.style.display = "unset";
+    playerList.innerHTML = "";
+    fetch(new URL("http://localhost:8000/players")).then(res => res.json())
+        .then(res => {
+            for (let i = 0; i < res.length; i++) {
+                playerList.innerHTML += "<div class='player-list-item'>" + res[i] + "</div>";
+            }
+        });
 }
 
 function socialClose() {
@@ -187,7 +194,7 @@ function signIn() {
             // console.log(res);
             let resId = parseInt(res);
 
-            
+
             if (!isNaN(resId)) {
                 onLogin(res);
             }
@@ -201,20 +208,20 @@ function onLogin(idValue) {
     id = idValue;
     console.log(id);
     fetch(new URL("http://localhost:8000/cookie-info"),
-    {
-        method: "POST",
-        body: JSON.stringify({"cookie": id})
-    }).then(res => res.json())
-    .then(res => { 
-        console.log(res);
-    
-        nickname.innerHTML = res;
-        document.cookie = idValue;
-        login.style.display = "none";
-        game.style.display = "unset";
-        refreshCities();
-        refreshCanvas();
-    });
+        {
+            method: "POST",
+            body: JSON.stringify({ "cookie": id })
+        }).then(res => res.json())
+        .then(res => {
+            console.log(res);
+
+            nickname.innerHTML = res;
+            document.cookie = idValue;
+            login.style.display = "none";
+            game.style.display = "unset";
+            refreshCities();
+            refreshCanvas();
+        });
 }
 
 function signUp() {

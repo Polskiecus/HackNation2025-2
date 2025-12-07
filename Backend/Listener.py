@@ -154,10 +154,17 @@ async def FirmInfo(request: Request):
 async def Newsy():
 	global main_scheduler, bs, reset
 	temp = [main_scheduler.get_a_news()]
-	if temp != [None]:pass
-	elif reset + 10 < time.time(): bs = some_bullshit(); reset=time.time()
-	if temp != [None]: temp = [bs]
-	return temp
+	
+	if temp != [None]:
+		return [temp[0].nazwa]
+
+	elif reset + 10 < time.time(): 
+		bs = some_bullshit()
+		reset=time.time()
+		return [bs]
+
+	else:
+		return [bs]
 
 @app.post("/log_in")
 async def Login(request: Request):
