@@ -164,7 +164,7 @@ async def Login(request: Request):
 		return "User does not exist!"
 
 	else:
-		if main_users[data["login"]]["pwd"] == data["pwd"]:
+		if main_users[data["login"]]["password"] == data["password"]:
 			num_ = random.randint(0, 2**30)
 			while num_ in Cookies:
 				num_ = random.randint(0, 2**30)
