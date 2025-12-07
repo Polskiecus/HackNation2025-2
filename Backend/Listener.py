@@ -240,7 +240,7 @@ async def AccValue(request: Request):
 	return out
 
 @app.post("/peep")
-async def Peep(request: Request) -> (float, float): #(networth, gotowka)
+async def Peep(request: Request): #(networth, gotowka)
 	global Cookies, main_users
 	data = await request.json()
 	login = extract_login_from_request(data["cookie"])
