@@ -251,6 +251,13 @@ async def Money(request: Request):
 
 	return user.bilans
 
+@app.post("/NBP")
+async def NBP(request: Request):
+	global Coookies, main_users
+	data = await request.json()
+	user = main_users[Cookies[data["token"]]]
+	user.bilans += 50
+
 if True:
 
 	main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
