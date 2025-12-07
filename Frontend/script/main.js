@@ -47,14 +47,18 @@ let selectedCity = "";
 let loadedNews = [""];
 let collapsedGraph = false;
 
-
+// console.log(document.cookie);
+if (document.cookie != "")
+{
+    // onLogin(document.cookie);
+}
 
 refreshCities();
 refreshCanvas();
 
 setInterval(() => {
     fetch(new URL("http://localhost:8000/timings")).then(res => res.json())
-    .then(res => { timer.innerHTML = res });
+    .then(res => { timer.innerHTML = Math.round(res) });
 }, 500);
 
 function refreshCities() {
@@ -189,15 +193,26 @@ function signIn() {
 
 function onLogin(idValue) {
     id = idValue;
-    nickname.innerHTML = loginInput.value;
-    document.cookie = idValue;
-    login.style.display = "none";
-    game.style.display = "unset";
-    refreshCities();
-    refreshCanvas();
+    console.log(id);
+    fetch(new URL("http://localhost:8000/cookie-info"),
+    {
+        method: "POST",
+        body: JSON.stringify({"cookie": id})
+    }).then(res => res.json())
+    .then(res => { 
+        console.log(res);
+    
+        nickname.innerHTML = res;
+        document.cookie = idValue;
+        login.style.display = "none";
+        game.style.display = "unset";
+        refreshCities();
+        refreshCanvas();
+    });
 }
 
 function signUp() {
+    console.log("SIGNUP");
     fetch(new URL("http://localhost:8000/register"),
         {
             method: "POST",

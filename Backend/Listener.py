@@ -191,8 +191,8 @@ async def Register(request: Request):
 async def CheckUser(request: Request):
 	global Cookies
 	data = await request.json()
-
-	if "cookie" not in data: return "NO COOKIE?"
+	#print(Cookies, data["cookie"])
+	if data["cookie"] not in Cookies: return "NO COOKIE?"
 	if data["cookie"] in Cookies: return Cookies[data["cookie"]]
 	return "Invalid cookie"
 
