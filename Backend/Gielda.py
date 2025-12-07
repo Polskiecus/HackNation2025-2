@@ -138,8 +138,11 @@ class Scheduler:
 
 			for firma in wylosowany_news.efekty:
 				self.push_changes(firma, wylosowany_news[firma])
-		else:
+
 			self.ostatni_news = wylosowany_news
+
+		else:
+			self.ostatni_news = None
 
 		if self.last_checked + self.time_to_pass < time.time():
 			self.update()
