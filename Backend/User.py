@@ -52,7 +52,8 @@ class User:
         #stac i da sie kupic
         akcja.remaining_shares -= ilosc
         self.bilans -= akcja.shareprice() * ilosc
-        self.akcje[akcja.nazwa].setdefault(0, akcja.nazwa)
+        if akcja.nazwa not in self.akcje:
+            self.akcje[akcja.nazwa] = 0
         self.akcje[akcja.nazwa] += ilosc
         return (True)
 

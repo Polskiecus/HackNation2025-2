@@ -274,13 +274,13 @@ h2 {
 }
 
 #business-list button:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
 }
 
 #business-list button:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
 }
 
 #business-list button img {
@@ -409,4 +409,47 @@ input {
 #business-region-item img{
     width: 32px;
     margin: 4px;
+}
+
+#transaction-window {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 16px;
+}
+
+#transaction-window button{
+    padding: 16px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: none;
+    border-radius: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+.slider {
+    -webkit-appearance: none;
+  width: 90%;
+  height: 2px;
+  border-radius: 8px;  
+  background: #0000002a;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
 }

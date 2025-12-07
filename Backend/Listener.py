@@ -94,8 +94,9 @@ async def Timings(): #za ile sekund aktualizuje sie rynek
 	main_scheduler.check_for_update()
 	return main_scheduler.time_to_pass + main_scheduler.last_checked - time.time()
 
-@app.get("/buy")
-async def Buy(nazwa: str, ilosc: int) -> bool:
+@app.post("/buy")
+async def Buy(request: Request) -> bool:
+	global main_scheduler
 	data = await request.json()
 
 	login = extract_login_from_request(data["cookie"])
@@ -110,10 +111,10 @@ async def Buy(nazwa: str, ilosc: int) -> bool:
 	except:
 		return False  # nie wykonalo sie
 
-	return main_users[login].kup_akcje(nazwa, ilosc)[0]
+	return main_users[login].kup_akcje(main_scheduler.akcje[nazwa], ilosc)
 
 
-@app.get("/sell")
+@app.post("/sell")
 async def Sell(request: Request) -> bool:
 	data = await request.json()
 

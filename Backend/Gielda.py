@@ -114,7 +114,7 @@ class Akcja:
 		self.czynniki.append(czynnik)
 
 	def shareprice(self):
-		return round(self.wartosc/self.total_shares, 2)
+		return round(self.wartosc/self.shares_total, 2)
 
 '''
 #===============#
