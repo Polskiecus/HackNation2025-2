@@ -512,3 +512,24 @@ input {
     transform: translate(-50%, -50%);
     border-radius: 16px;
 }
+
+@media (width <= 500px) {
+    .window{
+        max-width: 80%;
+    }
+
+    #login button:last-child{
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    #login button:first-child{
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    #login button{
+        width: 95%;
+        margin: 8px;
+    }
+}
