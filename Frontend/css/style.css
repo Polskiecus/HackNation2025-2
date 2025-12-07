@@ -219,6 +219,7 @@ h2 {
     padding: 8px;
     padding-top: 0px;
     margin-right: -8px;
+    display: none;
 }
 
 #stock-section button {
@@ -265,6 +266,11 @@ h2 {
     width: 45px;
     height: 45px;
     background-color: rgba(255, 255, 255, 0.05);
+}
+
+#business-list .selected-button {
+    /* border: 1px solid white; */
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 #business-list button:first-child {
@@ -357,7 +363,7 @@ h2 {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 8px;
+    border-radius: 16px;
 }
 
 input {
@@ -398,6 +404,7 @@ input {
     border: none;
     border-radius: 8px;
     color: white;
+    cursor: pointer;
 }
 #business-region-item img{
     width: 32px;

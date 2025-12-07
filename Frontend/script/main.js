@@ -11,7 +11,15 @@ const cities = [
     { left: 0.85, top: 0.28, name: "Białystok", img: "https://www.evertrek.pl/userdata/public/news/images/229.jpg" },
 ];
 
-const prices = [-10, 20, 15, 80, 10, 0, 200, 8];
+const businessColors = {
+    "Paruwex": "#f46e51",
+    "BydgoszczEnterprises": "#FFFFFF",
+    "NanoHard": "#ff1532",
+    "Ropucha": "#0b9e3c",
+    "DVDProjectBlue": "#2944f0"
+};
+
+let prices = [-10, 20, 15, 80, 10, 0, 200, 8];
 
 const PolandMap = document.getElementById("poland-map");
 const citiesParent = document.getElementById("cities");
@@ -39,6 +47,7 @@ const timer = document.getElementById("date");
 const playersList = document.getElementById("players-list");
 const newsList = document.getElementById("news-list");
 const businessRegionList = document.getElementById("business-region-list");
+const businessName = document.getElementById("business-name");
 
 const graphPaddingH = 8;
 const graphPaddingW = 0;
@@ -49,7 +58,8 @@ const lerp = (x, y, a) => x * (1 - a) + y * a;
 
 let selectedCity = "";
 let loadedNews = [""];
-let collapsedGraph = false;
+let collapsedGraph = true;
+let selectedBusiness = "";
 
 // console.log(document.cookie);
 // if (document.cookie != "")
@@ -58,7 +68,7 @@ let collapsedGraph = false;
 // }
 
 refreshCities();
-refreshCanvas();
+// refreshCanvas();
 
 setInterval(() => {
     fetch(new URL("http://localhost:8000/timings")).then(res => res.json())
@@ -85,6 +95,9 @@ function refreshCities() {
 }
 
 function refreshCanvas() {
+    if (selectedBusiness == "")
+        return;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.beginPath();
@@ -102,7 +115,6 @@ function refreshCanvas() {
 
     minVal = Math.round(minVal * graphMultiply) / graphMultiply - graphMultiply;
     maxVal = Math.round(maxVal * graphMultiply) / graphMultiply + graphMultiply;
-    console.log(minVal + " and " + maxVal);
 
     ctx.strokeStyle = "gray";
     for (let i = 0; i < graphLinesAmount; i++) {
@@ -113,7 +125,7 @@ function refreshCanvas() {
     ctx.stroke();
     // ctx.endPath();
     ctx.beginPath();
-    ctx.strokeStyle = "orange";
+    ctx.strokeStyle = businessColors[selectedBusiness];
     for (let i = 0; i < prices.length; i++) {
         let im = -minVal;
         let y = lerp(canvas.height - graphPaddingH, graphPaddingH, (prices[i] + im) / (maxVal + im));
@@ -126,8 +138,8 @@ function refreshCanvas() {
     ctx.lineTo(graphPaddingW, canvas.height + 2);
     // ctx.fillStyle = "#ffbb0050";
     const grad = ctx.createLinearGradient(0, 0, 0, ch * 1.5);
-    grad.addColorStop(0, "#ffbb0050");
-    grad.addColorStop(1, "#ffbb0000");
+    grad.addColorStop(0, businessColors[selectedBusiness] + "50");
+    grad.addColorStop(1, businessColors[selectedBusiness] + "00");
     ctx.fillStyle = grad;
     ctx.fill();
     ctx.stroke();
@@ -157,7 +169,7 @@ function clickCity(name, img) {
             businessRegionList.innerHTML = "";
             for (let i = 0; i < res.length; i++) {
                 businessRegionList.innerHTML += `
-                <button id="business-region-item">
+                <button id="business-region-item" onclick="businessClick('` + res[i] + `')">
                 <table>
                 <tr>
                 <td>
@@ -170,7 +182,7 @@ function clickCity(name, img) {
                     </table>
                 </button>
                 `;
-                
+
             }
         });
 }
@@ -217,8 +229,8 @@ function newsOpen() {
     newsPanel.style.display = "unset";
     newsList.innerHTML = "";
     for (let i = 0; i < loadedNews.length; i++) {
-                newsList.innerHTML += `<div class="news-list-item">` + loadedNews[i] + `</div>`;
-            }
+        newsList.innerHTML += `<div class="news-list-item">` + loadedNews[i] + `</div>`;
+    }
 }
 
 function newsClose() {
@@ -292,7 +304,21 @@ function businessClick(name) {
             })
 
         }).then(res => res.json())
-        .then(res => { console.log(res); });
+        .then(res => {
+            if (selectedBusiness != "")
+                document.getElementById(selectedBusiness + "Button").classList.remove("selected-button");
+
+            prices = res.values;
+            let lastBusiness = selectedBusiness;
+            selectedBusiness = name;
+            businessName.innerHTML = name;
+            if (collapsedGraph || lastBusiness != selectedBusiness)
+                document.getElementById(selectedBusiness + "Button").classList.add("selected-button");
+            console.log(document.getElementById(selectedBusiness + "Button"));
+            refreshCanvas();
+             if (collapsedGraph || lastBusiness == selectedBusiness)
+                switchGraph();
+            });
 }
 
 // deleteAllCookies();
