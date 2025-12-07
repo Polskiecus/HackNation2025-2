@@ -146,7 +146,7 @@ async def FirmInfo(request: Request):
 
 	try:
 		firma = main_scheduler.akcje[data["nazwa"]]
-		return {"shares_total": firma.shares_total, "shares_available": firma.shares_available, "value": firma.wartosc, "regiony": firma.region.split(";"), "values": firma.historic_value}
+		return {"shares_total": firma.shares_total, "shares_available": firma.remaining_shares, "value": firma.wartosc, "regiony": firma.region.split(";"), "values": firma.historic_value}
 	except:
 		return "I tried"
 
