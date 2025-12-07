@@ -10,9 +10,6 @@ from random import uniform
 
 import NewsHandler
 from NewsHandler import News
-
-from Backend.NewsHandler import NewsHandler
-
 '''
 #======#
 |CONFIG|
@@ -91,6 +88,8 @@ class Akcja:
 	def update(self):
 
 		self.historic_value.append(self.wartosc)
+		if (len(self.historic_value) > 10):
+			self.historic_value = self.historic_value[1:]
 
 		for czynnik in czynniki:
 			self.wartosc *= czynnik

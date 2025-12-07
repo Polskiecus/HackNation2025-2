@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request, Cookie, Response
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi.middleware.cors import CORSMiddleware
 from math import lgamma
 import asyncio
@@ -7,13 +8,13 @@ import time
 
 
 from User import User
-from main import main_scheduler
-from main import main_users
 from Listener import *
 from Gielda import *
 from User import *
 from NewsHandler import *
 import time
+
+app = FastAPI()
 
 
 origins = ["*"]
@@ -78,10 +79,10 @@ def extract_login_from_request(cookie: int):
 		pass
 
 # may god have mercy upon me
-async def RunAtIntervals(func):
-	global RUN
+async def RunAtIntervals():
+	global RUN, main_scheduler
 	while RUN:
-		func()
+		main_scheduler.check_for_update()
 		await asyncio.sleep(1)
 
 @app.get("/timings")
@@ -136,16 +137,21 @@ async def RegionFirms(request: Request):
 
 @app.get("/firminfo")
 async def FirmInfo(request: Request):
+	global main_scheduler
 	data = await request.json()
 
-	return {"shares_total": 100, "shares_available": 56, "value": 10000, "regiony": ["Warszawa"]}
+	try:
+		firma = main_scheduler.akcje[data["nazwa"]]
+		return {"shares_total": firma.shares_total, "shares_available": firma.shares_available, "value": firma.wartosc, "regiony": firma.region.split(";"), "values": firma.historic_value}
+	except:
+		return "I tried"
 
 @app.get("/newsy")
 async def Newsy():
 	global main_scheduler
 	temp = [main_scheduler.get_a_news()]
 	if temp == [None]: temp = [some_bullshit()]
-	else random.rand() < 0.6: temp = [some_bullshit()]
+	elif random.rand() < 0.6: temp = [some_bullshit()]
 	return temp
 
 @app.post("/log_in")
@@ -194,12 +200,18 @@ def some_bullshit():
 	global bullshit_news
 	return random.choice(bullshit_news)
 
+@app.on_event("startup")
+async def startup():
+
+	scheduler = AsyncIOScheduler()
+	scheduler.add_job(RunAtIntervals, "interval", seconds=1)  # Adjust interval here
+	scheduler.start()
+
 if __name__ == "__main__":
 
 	main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
-	main_scheduler = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
-	app = FastAPI()
-	Users: dict[str, User]   = {} #dict[login, user]
-	Cookies = {} #cos
-	RUN     = True
-	RunAtIntervals(main_scheduler.check_for_update)
+	main_scheduler              = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
+
+	Users: dict[str, User]      = {} #dict[login, user]
+	Cookies                     = {} #cos
+	RUN                         = True
