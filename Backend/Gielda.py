@@ -133,7 +133,7 @@ class Scheduler:
 
 	def check_for_update(self):
 		if uniform(0, 1) < 0.8: #dodaj losowego newsa
-			wylosowany_news: News = self.news_handler.get_news()
+			wylosowany_news: News = self.news_handler.random_news()
 			self.ostatni_news = wylosowany_news
 
 			for firma in wylosowany_news.efekty:
