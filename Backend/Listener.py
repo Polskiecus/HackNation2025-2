@@ -246,7 +246,7 @@ async def Peep(request: Request) -> (float, float): #(networth, gotowka)
 	login = extract_login_from_request(data["cookie"])
 	woman = data["woman"]
 	success = data["success"]
-	if success == "false": #nie udalo sie, ryzyko
+	if success == False: #nie udalo sie, ryzyko
 		main_users[login].bilans = 0
 		return (-1, -1)
 	return (main_users[woman].get_networth() * uniform(0.7, 1/0.7), main_users[woman].bilans * uniform(0.7, 1/0.7))
