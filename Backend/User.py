@@ -88,7 +88,7 @@ class User:
 
     def get_raided(self):
         for nazwa_firmy in self.akcje.keys():
-            if False == self.sprzedaj_akcje(nazwa_firmy, (self.akcje[nazwa_firmy]+1)//2):
+            if False == self.sprzedaj_akcje(nazwa_firmy, (self.akcje[nazwa_firmy]+1)//2)[0]:
                 return False
         self.bilans /= 2
         return True
