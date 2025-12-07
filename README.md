@@ -8,11 +8,12 @@ Każda osoba, która widzi to repozytorium zanim rozpocznie krytykę dowolnego e
 włącz ten skrypt z basha
 
 ```bash
-  pip install -r requirements.txt;
-  fastapi costam
+  pip install -r requirements.txt
+  cd Backend
+  uvicorn Listener:app
 ```
 
-i wejdz na adres w przeglądarce `http://HackNation2025-2/Frontend/index.html`
+i wejdz na adres w przeglądarce [strona](Frontend/index.html)
 
 # podstawowe akcje
 
