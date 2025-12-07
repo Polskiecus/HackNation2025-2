@@ -7,7 +7,7 @@ from Gielda import Akcja
 class User:
     akcje: dict[str, int]
     bilans: float
-    name: str
+    login: str
     password: str
 
     def __init__(self, login: str, password: str):
