@@ -283,9 +283,17 @@ function signUp() {
         .then(res => { alert(res); });
 }
 
+function businessClick(name) {
+    fetch(new URL("http://localhost:8000/firminfo"),
+        {
+            method: "POST",
+            body: JSON.stringify({
+                "nazwa": name
+            })
 
-
-id = 0;
+        }).then(res => res.json())
+        .then(res => { console.log(res); });
+}
 
 // deleteAllCookies();
 

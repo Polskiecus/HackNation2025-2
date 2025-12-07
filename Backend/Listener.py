@@ -139,7 +139,7 @@ async def RegionFirms(request: Request):
 
 	return [akcja for akcja in main_scheduler.akcje if region in main_scheduler.akcje[akcja].region.split(";")]
 
-@app.get("/firminfo")
+@app.post("/firminfo")
 async def FirmInfo(request: Request):
 	global main_scheduler
 	data = await request.json()
