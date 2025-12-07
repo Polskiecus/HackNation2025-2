@@ -81,6 +81,13 @@ class User:
             return (False, -1, -1)
         return (True, enemy.get_networth(), enemy.bilans)
 
+    def get_raided(self):
+        for nazwa_firmy in self.akcje.keys():
+            if False == self.sprzedaj_akcje(nazwa_firmy, (self.akcje[nazwa_firmy]+1)//2):
+                return False
+        self.bilans /= 2
+        return True
+
     def raid(self, enemy, budzet: float) -> (bool):
         if budzet < self.bilans:
             print("zbyt biedny")

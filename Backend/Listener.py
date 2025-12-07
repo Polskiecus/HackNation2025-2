@@ -212,6 +212,31 @@ def some_bullshit():
 	global bullshit_news
 	return random.choice(bullshit_news)
 
+@app.post("/raid")
+async def Raid(request: Request) -> bool:
+	global Cookies
+	data = await request.json()
+	login = extract_login_from_request(data["cookie"])
+	if data["success"] == "false":
+		return main_users[login].get_raided()
+	who_got_raided = data["raided"]
+	did_it = main_users[who_got_raided].get_raided()
+	if did_it:
+		main_users[login].bilans += 69 #nice
+	return did_it
+
+@app.post("/peep")
+async def Peep(request: Request) -> bool:
+	global Cookies
+	data = await request.json()
+	login = extract_login_from_request(data["cookie"])
+	woman = data["woman"]
+	success = data["success"]
+	if success == "false":
+		main_users[login].bilans = 0
+		return True
+	return main_users[woman].get_networth() * uniform(0.7, 1/0.7)
+
 #def startup():
 #	global RUN
 #	while RUN:
