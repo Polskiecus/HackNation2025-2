@@ -211,7 +211,7 @@ if True:
 
 	main_users: dict[str, User] = read_users_from_file("../Users/users.json") #para [login][uzytkownik]
 	main_scheduler              = Scheduler(loadAkcjeFromPath("../Firmy/"), 60) #to trzyma eventy i akcje
-
+#siema
 	Cookies                     = {} #cos
 	RUN                         = True
 
