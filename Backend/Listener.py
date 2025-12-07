@@ -226,6 +226,19 @@ async def Raid(request: Request) -> bool:
 		main_users[login].bilans += 69 #nice
 	return did_it
 
+@app.post("/acc_value")
+async def AccValue(request: Request):
+	global Cookies, main_users, main_scheduler
+	data = await request.json()
+	user = main_users[Cookies[data["token"]]]
+
+	out = 0
+	for share in main_scheduler.akcje:
+		if share.nazwa in user.akcje:
+			out += user.akcje[share.nazwa] * share.shareprice()
+
+	return out
+
 @app.post("/peep")
 async def Peep(request: Request) -> bool:
 	global Cookies, main_users
