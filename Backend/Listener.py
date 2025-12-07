@@ -17,6 +17,8 @@ import time
 
 app = FastAPI()
 RUN = True
+reset = 0
+bs = ""
 
 origins = ["*"]
 
@@ -150,10 +152,11 @@ async def FirmInfo(request: Request):
 
 @app.get("/newsy")
 async def Newsy():
-	global main_scheduler
+	global main_scheduler, bs, reset
 	temp = [main_scheduler.get_a_news()]
-	if temp == [None]: temp = [some_bullshit()]
-	elif random.uniform() < 0.6: temp = [some_bullshit()]
+	if temp != [None]:pass
+	elif reset + 10 < time.time(): bs = some_bullshit(); reset=time.time()
+	if temp != [None]: temp = [bs]
 	return temp
 
 @app.post("/log_in")
