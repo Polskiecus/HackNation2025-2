@@ -389,3 +389,17 @@ input {
 #login button:last-child {
     margin-left: 0;
 }
+
+#business-region-item{
+    width: 100%;
+    display: inline-block;
+    margin-top: 8px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: none;
+    border-radius: 8px;
+    color: white;
+}
+#business-region-item img{
+    width: 32px;
+    margin: 4px;
+}

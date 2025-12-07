@@ -38,6 +38,7 @@ const timer = document.getElementById("date");
 
 const playersList = document.getElementById("players-list");
 const newsList = document.getElementById("news-list");
+const businessRegionList = document.getElementById("business-region-list");
 
 const graphPaddingH = 8;
 const graphPaddingW = 0;
@@ -153,7 +154,24 @@ function clickCity(name, img) {
             infoImg.src = img;
             selectedCity = name;
             refreshCities();
-            console.log(res);
+            businessRegionList.innerHTML = "";
+            for (let i = 0; i < res.length; i++) {
+                businessRegionList.innerHTML += `
+                <button id="business-region-item">
+                <table>
+                <tr>
+                <td>
+                    <img src="sprites/` + res[i] + `Icon.png">
+                    <td>
+                    <td>
+                    ` + res[i] + `
+                    </td>
+                    </tr>
+                    </table>
+                </button>
+                `;
+                
+            }
         });
 }
 
