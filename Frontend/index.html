@@ -16,12 +16,14 @@
 <body>
     <div id="background" onclick="polandClick()"></div>
 
+    <!-- <div id="left-top">
+        
+    </div> -->
+
     <div id="top">
-        <div id="top-background"></div>
         <h1 id="money">200 zł</h1>
         <h3>Wartość portfela: 10 zł</h3>
-        <h1 id="date">6 grudnia 2025</h1>
-        <h3>Czas do kolejnego dnia: 6:32</h3>
+        <div id="top-background"></div>
     </div>
 
     <div id="center">
@@ -81,13 +83,31 @@
         </table>
     </div>
 
-    <div id="bottom">
+    <div id="bottom" onclick="newsOpen()">
         <div class="news-bar">Wiadomość...wiadomość...wiadomość...wiadomość...wiadomość</div>
         <div id="news2" class="news-bar">Wiadomość...wiadomość...wiadomość...wiadomość...wiadomość</div>
     </div>
+    <div id="bottom-above-news">
+        <h2 id="date">00:40</h2>
+        <!-- <h3>Czas do kolejnego dnia: 6:32</h3> -->
+    </div>
 
     <div id="left-bottom" class="window">
-        <button><img src="sprites/SocialIcon.png" alt="nanohard"></button>
+        <button><img src="sprites/SocialIcon.png" alt="nanohard" onclick="socialOpen()"></button>
+    </div>
+
+    <div class="window-panel" id="social-panel" onclick="socialClose()">
+        <div class="window" id="social-window">
+            <h1>Players</h1>
+            <div id="players-list"></div>
+        </div>
+    </div>
+
+    <div class="window-panel" id="news-panel" onclick="newsClose()">
+        <div class="window" id="news-window">
+            <h1>News</h1>
+            <div id="players-list"></div>
+        </div>
     </div>
 
     <script src="script/main.js"></script>

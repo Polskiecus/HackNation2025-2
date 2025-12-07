@@ -24,6 +24,8 @@ const currentNews = document.getElementsByClassName("news-bar");
 const stockSection = document.getElementById("stock-section");
 const collapseGraphButton = document.getElementById("collapse-graph-button");
 
+const socialPanel = document.getElementById("social-panel");
+const newsPanel = document.getElementById("news-panel");
 
 const graphPaddingH = 8;
 const graphPaddingW = 0;
@@ -123,10 +125,26 @@ function polandClick() {
     infoWindow.style.display = "none";
 }
 
+function socialOpen() {
+    socialPanel.style.display = "unset";
+}
+
+function socialClose() {
+    socialPanel.style.display = "none";
+}
+
 function switchGraph() {
     collapsedGraph = !collapsedGraph;
     stockSection.style.display = collapsedGraph ? "none" : "table";
     collapseGraphButton.style.transform = "scaleX(" + (collapsedGraph ? -1 : 1) + ")";
+}
+
+function newsOpen() {
+    newsPanel.style.display = "unset";
+}
+
+function newsClose() {
+    newsPanel.style.display = "none";
 }
 
 fetch(new URL("http://localhost:8000/register"),
