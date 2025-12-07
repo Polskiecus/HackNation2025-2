@@ -252,6 +252,17 @@ async def Money(request: Request):
 
 	return user.bilans
 
+@app.post("/shares_amount")
+async def amount(request: Request):
+	global Cookies, main_users
+	data = await request.json()
+	user = main_users[Cookies[data["token"]]]
+
+	if data["akcja"] in user.akcje:
+		return user.akcje[data["akcja"]]
+	else:
+		return 0
+
 @app.post("/NBP")
 async def NBP(request: Request):
 	global Coookies, main_users
