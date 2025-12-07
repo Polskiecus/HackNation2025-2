@@ -132,6 +132,12 @@ class Scheduler:
 
 
 	def check_for_update(self):
+
+		if self.last_checked + self.time_to_pass < time.time():
+			self.update()
+
+
+	def update(self):
 		if uniform(0, 1) < 0.8: #dodaj losowego newsa
 			wylosowany_news: News = self.news_handler.random_news()
 			self.ostatni_news = wylosowany_news
@@ -144,11 +150,6 @@ class Scheduler:
 		else:
 			self.ostatni_news = None
 
-		if self.last_checked + self.time_to_pass < time.time():
-			self.update()
-
-
-	def update(self):
 
 		for akcja in self.akcje:
 			self.akcje[akcja].update()

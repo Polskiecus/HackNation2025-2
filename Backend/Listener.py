@@ -89,6 +89,7 @@ async def RunAtIntervals():
 @app.get("/timings")
 async def Timings(): #za ile sekund aktualizuje sie rynek
 	global main_scheduler
+	main_scheduler.check_for_update()
 	return main_scheduler.time_to_pass + main_scheduler.last_checked - time.time()
 
 @app.get("/buy")
