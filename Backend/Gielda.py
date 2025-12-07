@@ -152,7 +152,7 @@ class Scheduler:
 			self.akcje[akcja].update()
 
 	def get_a_news(self):
-		return self.news_handler.ostatni_news
+		return self.ostatni_news
 
 	def push_changes(self, nazwa: str, czynnik: float):
 
