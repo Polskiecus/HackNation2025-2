@@ -164,7 +164,7 @@ async def Login(request: Request):
 		return "User does not exist!"
 
 	else:
-		if main_users[data["login"]].password == data["password"]:
+		if main_users[data["login"]].password == data["pwd"]:
 			num_ = random.randint(0, 2**30)
 			while num_ in Cookies:
 				num_ = random.randint(0, 2**30)
@@ -191,8 +191,8 @@ async def Register(request: Request):
 async def CheckUser(request: Request):
 	global Cookies
 	data = await request.json()
-
-	if "cookie" not in data: return "NO COOKIE?"
+	#print(Cookies, data["cookie"])
+	if data["cookie"] not in Cookies: return "NO COOKIE?"
 	if data["cookie"] in Cookies: return Cookies[data["cookie"]]
 	return "Invalid cookie"
 
